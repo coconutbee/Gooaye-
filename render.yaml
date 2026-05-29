@@ -1,0 +1,41 @@
+# ==============================================================================
+# RENDER BLUEPRINT — Gooaye 股癌題材追蹤分析器
+# ==============================================================================
+# 一鍵部署：在 Render Dashboard 連 GitHub repo，選 "New Blueprint" 即可。
+# 免費方案需注意：
+#   1. 30 分鐘無流量會休眠（第一次喚醒約 30 秒）
+#   2. 沒有持久磁碟，data/themes.json 會在重啟時清空 — 點「同步最新集數」即可重建
+#   3. 想真正持久化請：(a) 升級到 Starter 並加 disk，或 (b) 設定 Cloudflare R2 將 data/themes.json 自動備份
+# ==============================================================================
+
+services:
+  - type: web
+    name: gooaye-podcast-analyzer
+    runtime: node
+    plan: free
+
+    buildCommand: "npm install && npm run build"
+    startCommand: "npm run start"
+
+    envVars:
+      - key: NODE_ENV
+        value: production
+
+      - key: PORT
+        value: 10000
+
+      # ⚠️ 必填：Gemini API Key（在 https://aistudio.google.com 申請免費 key）
+      - key: GEMINI_API_KEY
+        sync: false
+
+      # ----------------------------------------------------------------------
+      # 選填：Cloudflare R2（將同步資料、研究結果自動備份雲端）
+      # ----------------------------------------------------------------------
+      - key: CLOUDFLARE_R2_ACCOUNT_ID
+        sync: false
+      - key: CLOUDFLARE_R2_ACCESS_KEY_ID
+        sync: false
+      - key: CLOUDFLARE_R2_SECRET_ACCESS_KEY
+        sync: false
+      - key: CLOUDFLARE_R2_BUCKET_NAME
+        sync: false

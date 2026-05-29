@@ -1,0 +1,24 @@
+# ==============================================================================
+# CLOUDFLARE WRANGLER CONFIGURATION FOR AISTOCKMAP
+# ==============================================================================
+# Use this config to deploy to Cloudflare Pages or Cloudflare Workers.
+
+name = "aistockmap"
+main = "dist/server.cjs"
+compatibility_date = "2026-05-21"
+
+# 1. STATIC SITE HOSTING (CLOUDFLARE PAGES)
+# To deploy the React SPA frontend to Cloudflare Pages (Free & Global CDN):
+# Command: npx wrangler pages deploy dist --project-name=aistockmap
+#
+# 2. FULLSTACK / BACKEND WORKERS HOSTING
+# To run the API server as a Cloudflare Worker:
+# compat_flags = [ "nodejs_compat" ]
+
+[vars]
+# Add your environment variables here
+NODE_ENV = "production"
+
+# [site]
+# bucket = "./dist"
+# entry-point = "workers-site"

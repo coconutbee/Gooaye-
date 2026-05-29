@@ -1,0 +1,6 @@
+{
+  "name": "股市議題與產業類股研究",
+  "description": "幫助研究任意股市熱門議題、產業鏈、相關概念類股與代號，並分析近期股價漲勢的行動版研究工具",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
