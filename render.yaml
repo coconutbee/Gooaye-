@@ -1,5 +1,5 @@
 # ==============================================================================
-# RENDER BLUEPRINT — Gooaye 股癌題材追蹤分析器
+# RENDER BLUEPRINT — SnowCap Insights 滾雪球洞察科技
 # ==============================================================================
 # 一鍵部署：在 Render Dashboard 連 GitHub repo，選 "New Blueprint" 即可。
 # 免費方案需注意：
@@ -10,7 +10,7 @@
 
 services:
   - type: web
-    name: gooaye-podcast-analyzer
+    name: snowcap-insights
     runtime: node
     plan: free
 
