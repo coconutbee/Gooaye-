@@ -21,10 +21,14 @@ services:
       - key: NODE_ENV
         value: production
 
+      # 釘 Node 20（專案 deps 要求 ≥20；避免重演 Node18 的 @tailwindcss/oxide 原生綁定問題）
+      - key: NODE_VERSION
+        value: "20"
+
       - key: PORT
         value: 10000
 
-      # ⚠️ 必填：Gemini API Key（在 https://aistudio.google.com 申請免費 key）
+      # 選填：Gemini API Key（不填 → 走免費策略清單；要付費版 AI 才需在 https://aistudio.google.com 申請）
       - key: GEMINI_API_KEY
         sync: false
 
