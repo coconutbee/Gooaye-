@@ -7,3 +7,6 @@ coverage/
 .env*
 !.env.example
 data/themes.json
+
+# Cloned reference repo (chengzuopeng/stock-dashboard) — studied for the heatmap, not shipped
+_reference/

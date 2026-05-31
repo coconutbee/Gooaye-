@@ -170,19 +170,20 @@ export default function PodcastThemeTracker() {
   return (
     <div className="space-y-6 pb-12">
       {/* ============ 頂部狀態列 ============ */}
-      <div className="bg-gradient-to-r from-indigo-600 via-violet-600 to-fuchsia-600 text-white rounded-2xl p-5 shadow-lg">
-        <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+      <div className="glass-card rounded-2xl p-5 relative overflow-hidden">
+        <div className="absolute -top-16 -right-10 w-64 h-64 rounded-full bg-gold/10 blur-3xl pointer-events-none" />
+        <div className="relative flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
           <div>
-            <h2 className="text-2xl font-bold flex items-center gap-2">
-              <Mic className="w-7 h-7" />
+            <h2 className="font-satoshi text-2xl font-medium text-snow flex items-center gap-2.5">
+              <span className="bg-gold/15 text-gold p-2 rounded-xl"><Mic className="w-5 h-5" /></span>
               股癌題材追蹤儀表板
             </h2>
-            <p className="text-indigo-100 mt-1 text-sm">
+            <p className="text-snow-muted mt-1.5 text-[13px]">
               滾動 3 個月內被提及的所有題材，點題材即可跑完整產業鏈與業務佔比
             </p>
           </div>
           <div className="flex flex-col items-end gap-2 md:flex-row md:items-center">
-            <div className="text-xs text-indigo-100 text-right">
+            <div className="text-xs text-snow-muted text-right">
               {lastSync ? (
                 <>最後同步：{new Date(lastSync).toLocaleString('zh-TW')}</>
               ) : (
@@ -193,7 +194,8 @@ export default function PodcastThemeTracker() {
             <button
               onClick={syncFromSource}
               disabled={syncing}
-              className="bg-white text-indigo-700 px-4 py-2 rounded-lg font-semibold hover:bg-indigo-50 disabled:opacity-60 flex items-center gap-2"
+              className="px-4 py-2 rounded-xl font-semibold text-[#1a1205] disabled:opacity-60 flex items-center gap-2 transition hover:brightness-110"
+              style={{ background: 'linear-gradient(180deg,#facc15,#f59e0b)' }}
             >
               {syncing ? (
                 <Loader2 className="w-4 h-4 animate-spin" />
@@ -205,19 +207,19 @@ export default function PodcastThemeTracker() {
           </div>
         </div>
         {syncResult && (
-          <div className="mt-3 text-sm bg-white/20 px-3 py-2 rounded-lg">{syncResult}</div>
+          <div className="relative mt-3 text-sm text-snow-2 bg-white/[0.06] border border-white/10 px-3 py-2 rounded-lg">{syncResult}</div>
         )}
       </div>
 
       {/* ============ 題材搜尋 ============ */}
-      <div className="bg-white rounded-xl p-4 shadow border border-gray-100">
+      <div className="glass-card rounded-xl p-3.5">
         <div className="flex items-center gap-2">
-          <Search className="w-4 h-4 text-gray-400" />
+          <Search className="w-4 h-4 text-snow-muted" />
           <input
             value={searchKeyword}
             onChange={e => setSearchKeyword(e.target.value)}
             placeholder="搜尋題材（如：被動元件、矽光子、液冷）"
-            className="flex-1 outline-none text-sm"
+            className="flex-1 bg-transparent outline-none text-sm text-snow placeholder:text-snow-muted/70"
           />
         </div>
       </div>
@@ -225,16 +227,16 @@ export default function PodcastThemeTracker() {
       {/* ============ 3 個月題材排行榜 ============ */}
       <div>
         <div className="flex items-center justify-between mb-3">
-          <h3 className="text-lg font-bold text-gray-800 flex items-center gap-2">
-            <Layers className="w-5 h-5 text-indigo-600" />
+          <h3 className="font-satoshi text-lg font-medium text-snow flex items-center gap-2">
+            <Layers className="w-5 h-5 text-gold" />
             3 個月題材熱度榜（{filteredThemes.length}）
           </h3>
-          {loading && <Loader2 className="w-4 h-4 animate-spin text-gray-400" />}
+          {loading && <Loader2 className="w-4 h-4 animate-spin text-snow-muted" />}
         </div>
 
         {filteredThemes.length === 0 && !loading && (
-          <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 text-sm text-yellow-800 flex items-start gap-2">
-            <AlertTriangle className="w-4 h-4 mt-0.5" />
+          <div className="bg-gold/[0.08] border border-gold/25 rounded-lg p-4 text-sm text-amber-200/90 flex items-start gap-2">
+            <AlertTriangle className="w-4 h-4 mt-0.5 shrink-0" />
             目前沒有任何題材資料，請按右上「同步最新集數」啟動第一次抓取。
           </div>
         )}
@@ -253,23 +255,23 @@ export default function PodcastThemeTracker() {
 
       {/* ============ 產業鏈調查結果 ============ */}
       {selectedTheme && (
-        <div className="border-t pt-6">
-          <h3 className="text-lg font-bold text-gray-800 mb-3 flex items-center gap-2">
-            <PieChart className="w-5 h-5 text-indigo-600" />
+        <div className="border-t border-white/[0.06] pt-6">
+          <h3 className="font-satoshi text-lg font-medium text-snow mb-3 flex items-center gap-2">
+            <PieChart className="w-5 h-5 text-gold" />
             產業鏈 + 業務佔比調查：「{selectedTheme}」
           </h3>
 
           {surveyLoading && (
-            <div className="bg-indigo-50 rounded-xl p-6 text-center">
-              <Loader2 className="w-6 h-6 animate-spin text-indigo-600 mx-auto mb-2" />
-              <div className="text-sm text-indigo-700">
+            <div className="glass-card rounded-xl p-6 text-center">
+              <Loader2 className="w-6 h-6 animate-spin text-gold mx-auto mb-2" />
+              <div className="text-sm text-snow-2">
                 正在抓經濟日報 / 工商時報 / 鉅亨網 ，並用 Gemini 整合產業鏈…
               </div>
             </div>
           )}
 
           {surveyError && (
-            <div className="bg-red-50 border border-red-200 text-red-700 rounded-xl p-4">
+            <div className="bg-down/10 border border-down/30 text-red-300 rounded-xl p-4">
               分析失敗：{surveyError}
             </div>
           )}
@@ -280,8 +282,8 @@ export default function PodcastThemeTracker() {
 
       {/* ============ 最近集數列表 ============ */}
       <div>
-        <h3 className="text-lg font-bold text-gray-800 mb-3 flex items-center gap-2">
-          <Calendar className="w-5 h-5 text-indigo-600" />
+        <h3 className="font-satoshi text-lg font-medium text-snow mb-3 flex items-center gap-2">
+          <Calendar className="w-5 h-5 text-gold" />
           3 個月內集數 ({episodes.length})
         </h3>
         <div className="space-y-2">
@@ -305,9 +307,9 @@ function ThemeCard({
   isSelected: boolean;
 }) {
   const trendBadge = {
-    rising: { icon: TrendingUp, color: 'text-red-600 bg-red-50', label: '升溫' },
-    sustained: { icon: Minus, color: 'text-gray-600 bg-gray-100', label: '持平' },
-    cooling: { icon: TrendingDown, color: 'text-emerald-600 bg-emerald-50', label: '降溫' },
+    rising: { icon: TrendingUp, color: 'text-red-300 bg-down/15', label: '升溫' },
+    sustained: { icon: Minus, color: 'text-snow-2 bg-white/[0.07]', label: '持平' },
+    cooling: { icon: TrendingDown, color: 'text-emerald-300 bg-up/15', label: '降溫' },
   }[theme.trend];
   const T = trendBadge.icon;
 
@@ -321,12 +323,12 @@ function ThemeCard({
   return (
     <button
       onClick={onClick}
-      className={`text-left bg-white rounded-xl p-4 shadow-sm border-2 hover:shadow-md transition-all ${
-        isSelected ? 'border-indigo-500 ring-2 ring-indigo-200' : 'border-gray-100'
+      className={`text-left glass-card rounded-xl p-4 transition-all hover:border-gold/40 ${
+        isSelected ? '!border-gold/60 ring-1 ring-gold/30' : ''
       }`}
     >
       <div className="flex items-start justify-between gap-2">
-        <div className="font-bold text-gray-800 flex-1">{theme.theme}</div>
+        <div className="font-satoshi font-medium text-snow flex-1">{theme.theme}</div>
         <span
           className={`text-xs px-2 py-0.5 rounded-full font-semibold flex items-center gap-1 ${trendBadge.color}`}
         >
@@ -334,7 +336,7 @@ function ThemeCard({
           {trendBadge.label}
         </span>
       </div>
-      <div className="mt-2 flex items-center gap-3 text-xs text-gray-500">
+      <div className="mt-2 flex items-center gap-3 text-xs text-snow-muted">
         <span>{sentimentEmoji}</span>
         <span>提及 {theme.mentionCount} 次</span>
         <span>·</span>
@@ -344,15 +346,15 @@ function ThemeCard({
         {theme.relatedStocks.slice(0, 4).map(s => (
           <span
             key={s.stock}
-            className="text-[11px] px-2 py-0.5 bg-indigo-50 text-indigo-700 rounded"
+            className="text-[11px] px-2 py-0.5 bg-gold/10 text-amber-200/90 border border-gold/15 rounded"
           >
             {s.stock}
           </span>
         ))}
       </div>
-      <div className="mt-2 flex items-center justify-between text-[11px] text-gray-400">
+      <div className="mt-2 flex items-center justify-between text-[11px] text-snow-muted">
         <span>{new Date(theme.lastMentioned).toLocaleDateString('zh-TW')}</span>
-        <span className="flex items-center gap-1 text-indigo-600 font-semibold">
+        <span className="flex items-center gap-1 text-gold font-semibold">
           跑產業鏈 <ChevronRight className="w-3 h-3" />
         </span>
       </div>
@@ -364,40 +366,40 @@ function ThemeCard({
 function EpisodeRow({ ep }: { ep: ThemeEpisode }) {
   const [open, setOpen] = useState(false);
   return (
-    <div className="bg-white rounded-lg border border-gray-100 p-3">
+    <div className="glass-card rounded-lg p-3">
       <button
         onClick={() => setOpen(o => !o)}
         className="w-full text-left flex items-center gap-3"
       >
-        <span className="bg-indigo-100 text-indigo-700 font-bold text-xs px-2 py-0.5 rounded">
+        <span className="bg-gold/15 text-gold font-bold text-xs px-2 py-0.5 rounded font-mono">
           {ep.ep}
         </span>
-        <span className="text-xs text-gray-400">
+        <span className="text-xs text-snow-muted">
           {new Date(ep.date).toLocaleDateString('zh-TW')}
         </span>
-        <span className="flex-1 font-medium text-gray-700 text-sm truncate">{ep.title}</span>
+        <span className="flex-1 font-medium text-snow-2 text-sm truncate">{ep.title}</span>
         <ChevronRight
-          className={`w-4 h-4 text-gray-400 transition-transform ${open ? 'rotate-90' : ''}`}
+          className={`w-4 h-4 text-snow-muted transition-transform ${open ? 'rotate-90' : ''}`}
         />
       </button>
       {open && (
-        <div className="mt-3 pl-2 border-l-2 border-indigo-100 space-y-2 text-sm">
-          <p className="text-gray-700">{ep.summary}</p>
+        <div className="mt-3 pl-2 border-l-2 border-gold/30 space-y-2 text-sm">
+          <p className="text-snow-2">{ep.summary}</p>
           <div className="flex flex-wrap gap-1">
             {ep.themes.map(t => (
               <span
                 key={t}
-                className="text-[11px] px-2 py-0.5 bg-violet-50 text-violet-700 rounded"
+                className="text-[11px] px-2 py-0.5 bg-white/[0.06] text-snow-2 border border-white/[0.06] rounded"
               >
                 {t}
               </span>
             ))}
           </div>
           {ep.investmentAdvice && (
-            <div className="bg-amber-50 border border-amber-200 rounded p-2 text-xs">
-              <div className="font-bold text-amber-800">{ep.investmentAdvice.title}</div>
-              <div className="text-amber-700 mt-1">{ep.investmentAdvice.action}</div>
-              <div className="text-gray-700 mt-1">{ep.investmentAdvice.details}</div>
+            <div className="bg-gold/[0.08] border border-gold/25 rounded p-2 text-xs">
+              <div className="font-bold text-amber-200">{ep.investmentAdvice.title}</div>
+              <div className="text-amber-200/80 mt-1">{ep.investmentAdvice.action}</div>
+              <div className="text-snow-2 mt-1">{ep.investmentAdvice.details}</div>
             </div>
           )}
           {ep.sourceUrl && (
@@ -405,7 +407,7 @@ function EpisodeRow({ ep }: { ep: ThemeEpisode }) {
               href={ep.sourceUrl}
               target="_blank"
               rel="noreferrer"
-              className="text-indigo-600 text-xs inline-flex items-center gap-1"
+              className="text-gold text-xs inline-flex items-center gap-1"
             >
               來源 <ExternalLink className="w-3 h-3" />
             </a>
@@ -426,13 +428,13 @@ function SurveyView({ survey }: { survey: IndustrySurvey }) {
 
   return (
     <div className="space-y-5">
-      <div className="bg-indigo-50 border border-indigo-200 rounded-xl p-4">
-        <div className="text-sm text-indigo-900">{survey.summary}</div>
-        <div className="mt-3 bg-white rounded-lg p-3 border border-indigo-100">
-          <div className="text-xs text-indigo-500 font-semibold mb-1">
+      <div className="glass-card rounded-xl p-4">
+        <div className="text-sm text-snow-2 leading-relaxed">{survey.summary}</div>
+        <div className="mt-3 bg-white/[0.04] rounded-lg p-3 border border-white/[0.06]">
+          <div className="text-xs text-gold font-semibold mb-1">
             主流產品趨勢
           </div>
-          <div className="text-sm text-gray-800">{survey.mainstreamProductTrend}</div>
+          <div className="text-sm text-snow">{survey.mainstreamProductTrend}</div>
         </div>
       </div>
 
@@ -440,7 +442,7 @@ function SurveyView({ survey }: { survey: IndustrySurvey }) {
         {stages.map(s => (
           <div
             key={s.key}
-            className="rounded-xl overflow-hidden border border-gray-200 bg-white"
+            className="rounded-xl overflow-hidden glass-card"
           >
             <div className={`bg-gradient-to-r ${s.color} text-white p-3`}>
               <div className="font-bold">{s.label}</div>
@@ -452,7 +454,7 @@ function SurveyView({ survey }: { survey: IndustrySurvey }) {
               {survey.chain[s.key].players.map(p => (
                 <span
                   key={p}
-                  className="text-xs px-2 py-0.5 bg-gray-100 rounded text-gray-700"
+                  className="text-xs px-2 py-0.5 bg-white/[0.06] border border-white/[0.06] rounded text-snow-2"
                 >
                   {p}
                 </span>
@@ -463,8 +465,8 @@ function SurveyView({ survey }: { survey: IndustrySurvey }) {
       </div>
 
       <div>
-        <h4 className="font-bold text-gray-800 mb-2 flex items-center gap-2">
-          <PieChart className="w-4 h-4 text-indigo-600" />
+        <h4 className="font-satoshi font-medium text-snow mb-2 flex items-center gap-2">
+          <PieChart className="w-4 h-4 text-gold" />
           相關企業業務佔比
         </h4>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -495,26 +497,26 @@ function CompanyCard({
   }));
 
   const roleColor = {
-    upstream: 'bg-emerald-100 text-emerald-700',
-    midstream: 'bg-amber-100 text-amber-700',
-    downstream: 'bg-rose-100 text-rose-700',
-    other: 'bg-gray-100 text-gray-700',
+    upstream: 'bg-up/15 text-emerald-300',
+    midstream: 'bg-gold/15 text-amber-300',
+    downstream: 'bg-rose-500/15 text-rose-300',
+    other: 'bg-white/[0.07] text-snow-2',
   }[c.role];
 
   const confColor = {
-    high: 'bg-green-100 text-green-700',
-    medium: 'bg-yellow-100 text-yellow-700',
-    low: 'bg-red-100 text-red-700',
+    high: 'bg-up/15 text-emerald-300',
+    medium: 'bg-gold/15 text-amber-300',
+    low: 'bg-down/15 text-red-300',
   }[c.confidence];
 
   return (
-    <div className="bg-white rounded-xl border border-gray-200 p-4">
+    <div className="glass-card rounded-xl p-4">
       <div className="flex items-start justify-between gap-2">
         <div>
-          <div className="font-bold text-gray-800">
-            {c.name} <span className="text-gray-400 text-sm">({c.ticker})</span>
+          <div className="font-satoshi font-medium text-snow">
+            {c.name} <span className="text-snow-muted text-sm">({c.ticker})</span>
           </div>
-          <div className="text-xs text-gray-500 mt-0.5">{c.mainstreamProduct}</div>
+          <div className="text-xs text-snow-muted mt-0.5">{c.mainstreamProduct}</div>
         </div>
         <div className="flex flex-col gap-1 items-end">
           <span className={`text-[11px] px-2 py-0.5 rounded font-semibold ${roleColor}`}>
@@ -554,10 +556,10 @@ function CompanyCard({
             className="flex items-start gap-2 border-l-2 pl-2"
             style={{ borderColor: PIE_COLORS[i % PIE_COLORS.length] }}
           >
-            <span className="font-semibold text-gray-800 min-w-[60px]">
+            <span className="font-semibold text-snow min-w-[60px]">
               {p.product} {p.share}%
             </span>
-            <span className="text-gray-600 flex-1">
+            <span className="text-snow-2 flex-1">
               {p.description}
               {p.citationIds.length > 0 && (
                 <>
@@ -568,7 +570,7 @@ function CompanyCard({
                       href={citations.find(c => c.id === id)?.url || '#'}
                       target="_blank"
                       rel="noreferrer"
-                      className="text-indigo-600"
+                      className="text-gold"
                     >
                       [{id}]
                     </a>
@@ -581,7 +583,7 @@ function CompanyCard({
       </div>
 
       {c.notes && (
-        <div className="mt-3 text-[11px] text-gray-500 bg-gray-50 p-2 rounded">
+        <div className="mt-3 text-[11px] text-snow-muted bg-white/[0.04] border border-white/[0.06] p-2 rounded">
           ⚠️ {c.notes}
         </div>
       )}
@@ -596,21 +598,21 @@ function CitationList({
 }) {
   if (citations.length === 0) return null;
   return (
-    <div className="bg-gray-50 rounded-xl p-4 text-xs">
-      <div className="font-bold text-gray-700 mb-2">📰 引用來源</div>
+    <div className="glass-card rounded-xl p-4 text-xs">
+      <div className="font-semibold text-snow-2 mb-2">📰 引用來源</div>
       <ol className="space-y-1">
         {citations.map(c => (
-          <li key={c.id} className="text-gray-600">
+          <li key={c.id} className="text-snow-muted">
             [{c.id}]{' '}
             <a
               href={c.url}
               target="_blank"
               rel="noreferrer"
-              className="text-indigo-600 hover:underline"
+              className="text-gold hover:underline"
             >
               {c.title}
             </a>
-            <span className="text-gray-400 ml-2">({c.source})</span>
+            <span className="text-snow-muted ml-2">({c.source})</span>
           </li>
         ))}
       </ol>

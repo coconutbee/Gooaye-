@@ -3,15 +3,14 @@
 // 抽出結構化題材、情緒、相關個股、投資建議
 // ============================================================================
 
-import { GoogleGenAI } from '@google/genai';
 import { RawEpisode } from './gooayeFetcher';
 import { ThemeEpisodeRecord } from './themeStore';
+import { geminiJson } from './geminiClient';
 
 const SYSTEM_PROMPT = `您是一位專業的台股題材分析助手。請從下方股癌 Podcast 集數的內容中，抽出結構化資訊。
 務必直接回傳 JSON 物件，不要加任何說明、markdown 包裝。`;
 
 export async function analyzeEpisode(
-  ai: GoogleGenAI,
   raw: RawEpisode
 ): Promise<ThemeEpisodeRecord> {
   // 截斷過長 shownotes，避免 token 爆掉
@@ -42,18 +41,7 @@ ${content}
   }
 }`;
 
-  const response = await ai.models.generateContent({
-    model: 'gemini-3.5-flash',
-    contents: prompt,
-    config: { responseMimeType: 'application/json' },
-  });
-
-  let text = (response.text || '').trim();
-  if (text.startsWith('```json')) text = text.slice(7);
-  if (text.startsWith('```')) text = text.slice(3);
-  if (text.endsWith('```')) text = text.slice(0, -3);
-
-  const parsed = JSON.parse(text.trim());
+  const parsed = await geminiJson<any>(prompt);
 
   return {
     ep: raw.ep,

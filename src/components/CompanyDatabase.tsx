@@ -171,22 +171,22 @@ export default function CompanyDatabase() {
   return (
     <div className="grid grid-cols-1 md:grid-cols-12 gap-5">
       {/* Left Navigation: Companies List Grid (4 cols) */}
-      <div className="md:col-span-4 bg-white p-4 rounded-xl border border-slate-100 shadow-3xs space-y-4 h-fit">
+      <div className="md:col-span-4 glass-card p-4 rounded-xl space-y-4 h-fit">
         <div className="space-y-1">
-          <h3 className="font-extrabold text-slate-800 text-xs flex items-center gap-1.5">
-            <BookOpen className="text-indigo-600 w-4 h-4" />
+          <h3 className="font-satoshi font-medium text-snow text-sm flex items-center gap-1.5">
+            <BookOpen className="text-gold w-4 h-4" />
             <span>公司資料庫與深度剖析</span>
           </h3>
-          <p className="text-[10px] text-slate-400">快速搜尋個股、查看其技術護城河、關鍵產品、核心客戶及完整 SWOT分析</p>
+          <p className="text-[10px] text-snow-muted">快速搜尋個股、查看其技術護城河、關鍵產品、核心客戶及完整 SWOT分析</p>
         </div>
 
         {/* Search */}
-        <input 
-          type="text" 
+        <input
+          type="text"
           value={searchWord}
           onChange={(e) => setSearchWord(e.target.value)}
           placeholder="搜尋公司或代碼... 如: 3443"
-          className="w-full px-3 py-2 text-xs rounded-lg border border-slate-200 outline-hidden bg-slate-50 focus:bg-white focus:ring-2 focus:ring-indigo-100 transition"
+          className="w-full px-3 py-2 text-xs rounded-lg bg-white/[0.05] border border-white/10 text-snow placeholder:text-snow-muted/70 outline-none focus:border-gold/40 focus:bg-white/[0.07] transition"
         />
 
         {/* List items */}
@@ -199,26 +199,26 @@ export default function CompanyDatabase() {
                 key={co.id}
                 onClick={() => setSelectedId(co.id)}
                 className={`p-3 rounded-lg border cursor-pointer transition flex items-center justify-between ${
-                  isSelected 
-                    ? 'bg-indigo-50/50 border-indigo-400 ring-1 ring-indigo-200/50' 
-                    : 'bg-slate-50/50 border-slate-100 hover:bg-slate-50'
+                  isSelected
+                    ? 'bg-gold/10 border-gold/50 ring-1 ring-gold/25'
+                    : 'bg-white/[0.03] border-white/[0.06] hover:bg-white/[0.06]'
                 }`}
               >
                 <div>
                   <div className="flex items-center gap-1.5">
-                    <span className="font-bold text-xs text-slate-700">{co.name}</span>
-                    <span className="text-[10px] text-slate-400 font-mono">({co.code})</span>
+                    <span className="font-bold text-xs text-snow">{co.name}</span>
+                    <span className="text-[10px] text-snow-muted font-mono">({co.code})</span>
                   </div>
-                  <span className="text-[9px] bg-slate-100 text-slate-500 px-1 py-0.5 rounded leading-none">
+                  <span className="text-[9px] bg-white/[0.06] text-snow-muted px-1 py-0.5 rounded leading-none">
                     主核：{co.activeThemeSelected}
                   </span>
                 </div>
 
-                <button 
+                <button
                   onClick={(e) => toggleFavorite(co.id, e)}
-                  className="p-1 rounded-sm text-slate-300 hover:text-red-500 transition"
+                  className="p-1 rounded-sm text-snow-muted hover:text-down transition"
                 >
-                  <Heart className={`w-3.5 h-3.5 ${isFav ? 'fill-red-500 text-red-500' : ''}`} />
+                  <Heart className={`w-3.5 h-3.5 ${isFav ? 'fill-down text-down' : ''}`} />
                 </button>
               </div>
             );
@@ -227,98 +227,79 @@ export default function CompanyDatabase() {
       </div>
 
       {/* Right Content: Deep Profile Layout (8 cols - exactly matching visual mockup) */}
-      <div className="md:col-span-8 bg-white rounded-xl border border-slate-100 shadow-3xs p-5 space-y-4">
+      <div className="md:col-span-8 glass-card rounded-xl p-5 space-y-4">
         {/* Header containing Back and Favorite Button */}
-        <div className="flex justify-between items-center border-b border-slate-50 pb-3 flex-wrap gap-2">
+        <div className="flex justify-between items-center border-b border-white/[0.06] pb-3 flex-wrap gap-2">
           <div className="flex items-center gap-2">
-            <button 
+            <button
               onClick={() => setSelectedId('3443')}
-              className="p-1 rounded-lg hover:bg-slate-50 transition text-slate-400 hover:text-slate-700"
+              className="p-1 rounded-lg hover:bg-white/[0.06] transition text-snow-muted hover:text-snow"
             >
               <ArrowLeft className="w-4 h-4" />
             </button>
-            <h2 className="text-md font-extrabold text-slate-900 flex items-center gap-1.5">
+            <h2 className="font-satoshi text-md font-medium text-snow flex items-center gap-1.5">
               <span>{currentCompany.name} ({currentCompany.code.replace('.TW', '')})</span>
             </h2>
             <div className="flex flex-wrap gap-1">
-              <span className="text-[9px] bg-emerald-50 text-emerald-600 font-bold px-1.5 py-0.5 rounded border border-emerald-200/40">
+              <span className="text-[9px] bg-up/15 text-emerald-300 font-bold px-1.5 py-0.5 rounded border border-up/25">
                 {currentCompany.revenueStatus}
               </span>
-              <span className="text-[9px] bg-blue-50 text-blue-600 font-bold px-1.5 py-0.5 rounded border border-blue-200/40">
+              <span className="text-[9px] bg-blue-500/15 text-blue-300 font-bold px-1.5 py-0.5 rounded border border-blue-400/25">
                 {currentCompany.marginStatus}
               </span>
-              <span className="text-[9px] bg-indigo-50 text-indigo-600 font-bold px-1.5 py-0.5 rounded border border-indigo-200/40">
+              <span className="text-[9px] bg-gold/15 text-gold font-bold px-1.5 py-0.5 rounded border border-gold/25">
                 {currentCompany.institutionStatus}
               </span>
               {currentCompany.hasFutureOption && (
-                <span className="text-[9px] bg-slate-100 text-slate-500 font-bold px-1.5 py-0.5 rounded">
+                <span className="text-[9px] bg-white/[0.06] text-snow-muted font-bold px-1.5 py-0.5 rounded">
                   有股票期貨
                 </span>
               )}
             </div>
           </div>
 
-          <button 
+          <button
             onClick={(e) => toggleFavorite(currentCompany.id, e)}
-            className="flex items-center gap-1 text-[10.5px] border border-slate-200 hover:bg-slate-50 px-3 py-1 rounded-lg transition text-slate-600"
+            className="flex items-center gap-1 text-[10.5px] border border-white/10 hover:bg-white/[0.06] px-3 py-1 rounded-lg transition text-snow-2"
           >
-            <Heart className={`w-3.5 h-3.5 ${favorites[currentCompany.id] ? 'fill-red-500 text-red-500' : 'text-slate-400'}`} />
+            <Heart className={`w-3.5 h-3.5 ${favorites[currentCompany.id] ? 'fill-down text-down' : 'text-snow-muted'}`} />
             <span>{favorites[currentCompany.id] ? '已加入收藏' : '加入收藏'}</span>
           </button>
         </div>
 
-        {/* Navigation sub-tabs (基本資料, 產業分析, 籌碼分析, 技術分析...) */}
-        <div className="flex gap-1.5 border-b border-slate-100 pb-1 overflow-x-auto text-xs font-semibold max-w-full">
-          <button 
-            onClick={() => setActiveTab('info')}
-            className={`pb-2 px-1 transition ${activeTab === 'info' ? 'text-indigo-600 border-b-2 border-indigo-600 font-bold' : 'text-slate-500 hover:text-slate-800'}`}
-          >
-            基本資料
-          </button>
-          <button 
-            onClick={() => setActiveTab('industry')}
-            className={`pb-2 px-1 transition ${activeTab === 'industry' ? 'text-indigo-600 border-b-2 border-indigo-600 font-bold' : 'text-slate-500 hover:text-slate-800'}`}
-          >
-            產業分析
-          </button>
-          <button 
-            onClick={() => setActiveTab('insider')}
-            className={`pb-2 px-1 transition ${activeTab === 'insider' ? 'text-indigo-600 border-b-2 border-indigo-600 font-bold' : 'text-slate-500 hover:text-slate-800'}`}
-          >
-            籌碼分析
-          </button>
-          <button 
-            onClick={() => setActiveTab('tech')}
-            className={`pb-2 px-1 transition ${activeTab === 'tech' ? 'text-indigo-600 border-b-2 border-indigo-600 font-bold' : 'text-slate-500 hover:text-slate-800'}`}
-          >
-            技術分析
-          </button>
-          <button 
-            onClick={() => setActiveTab('news')}
-            className={`pb-2 px-1 transition ${activeTab === 'news' ? 'text-indigo-600 border-b-2 border-indigo-600 font-bold' : 'text-slate-500 hover:text-slate-800'}`}
-          >
-            相關新聞
-          </button>
-          <button 
-            onClick={() => setActiveTab('charts')}
-            className={`pb-2 px-1 transition ${activeTab === 'charts' ? 'text-indigo-600 border-b-2 border-indigo-600 font-bold' : 'text-slate-500 hover:text-slate-800'}`}
-          >
-            研究圖表
-          </button>
+        {/* Navigation sub-tabs */}
+        <div className="flex gap-1.5 border-b border-white/[0.06] pb-1 overflow-x-auto text-xs font-semibold max-w-full scrollbar-none">
+          {([
+            { k: 'info', label: '基本資料' },
+            { k: 'industry', label: '產業分析' },
+            { k: 'insider', label: '籌碼分析' },
+            { k: 'tech', label: '技術分析' },
+            { k: 'news', label: '相關新聞' },
+            { k: 'charts', label: '研究圖表' },
+          ] as const).map(({ k, label }) => (
+            <button
+              key={k}
+              onClick={() => setActiveTab(k)}
+              className={`pb-2 px-1 shrink-0 transition ${activeTab === k ? 'text-gold border-b-2 border-gold font-bold' : 'text-snow-muted hover:text-snow'}`}
+            >
+              {label}
+            </button>
+          ))}
         </div>
 
-        {/* Scrollable horizontal theme badges (AI 伺服器組裝, 客製 ASIC 與矽智財...) */}
-        <div className="flex gap-1.5 overflow-x-auto pb-1 max-w-full">
+        {/* Scrollable horizontal theme badges */}
+        <div className="flex gap-1.5 overflow-x-auto pb-1 max-w-full scrollbar-none">
           {['AI 伺服器組裝', '客製 ASIC 與矽智財', 'AI 先進封裝', 'CXL 技術', 'HBM 高頻寬記憶體', '矽光子與 CPO'].map((themeName) => {
             const isSelected = themeName === currentCompany.activeThemeSelected;
             return (
               <span
                 key={themeName}
                 className={`text-[10.5px] px-2.5 py-1 rounded-lg shrink-0 font-bold border transition ${
-                  isSelected 
-                    ? 'bg-indigo-600 text-white border-indigo-500' 
-                    : 'bg-slate-50 border-slate-100 text-slate-500'
+                  isSelected
+                    ? 'text-[#1a1205] border-transparent'
+                    : 'bg-white/[0.05] border-white/[0.08] text-snow-muted'
                 }`}
+                style={isSelected ? { background: 'linear-gradient(180deg,#facc15,#f59e0b)' } : undefined}
               >
                 {themeName}
               </span>
@@ -328,12 +309,12 @@ export default function CompanyDatabase() {
 
         {/* Major Content Screen according to tabs */}
         {activeTab !== 'industry' ? (
-          <div className="p-8 bg-slate-50 rounded-xl text-center text-slate-500 text-xs flex flex-col items-center justify-center space-y-2">
-            <Activity className="w-8 h-8 text-slate-300 animate-spin-slow" />
+          <div className="p-8 bg-white/[0.03] border border-white/[0.06] rounded-xl text-center text-snow-muted text-xs flex flex-col items-center justify-center space-y-2">
+            <Activity className="w-8 h-8 text-snow-muted" />
             <span>正在為此股票連結台灣「證交所即時備用籌碼」與「技術線圖對比」系統...</span>
-            <button 
+            <button
               onClick={() => setActiveTab('industry')}
-              className="text-xs bg-indigo-50 text-indigo-700 px-3 py-1.5 rounded-lg border border-indigo-100"
+              className="text-xs bg-gold/15 text-gold px-3 py-1.5 rounded-lg border border-gold/25"
             >
               返回「產業分析」深度觀看
             </button>
@@ -341,51 +322,51 @@ export default function CompanyDatabase() {
         ) : (
           <div className="space-y-4 animate-fade-in text-xs leading-normal">
             {/* Theme Relation Panel */}
-            <div className="p-4 bg-[#FFF8F8] border border-red-50 rounded-xl flex justify-between items-start">
+            <div className="p-4 bg-down/[0.07] border border-down/20 rounded-xl flex justify-between items-start">
               <div className="space-y-1">
-                <span className="text-[10px] font-bold text-red-500 uppercase tracking-widest block font-mono">CORE THEME RELATION</span>
-                <h3 className="font-extrabold text-slate-800 text-sm flex items-center gap-1.5">
+                <span className="text-[10px] font-bold text-down uppercase tracking-widest block font-mono">CORE THEME RELATION</span>
+                <h3 className="font-satoshi font-medium text-snow text-sm flex items-center gap-1.5">
                   📁 {currentCompany.activeThemeSelected}
                 </h3>
               </div>
-              <span className="text-[10px] bg-red-100/70 text-red-700 font-extrabold px-2.5 py-1 rounded-md">高 關聯度</span>
+              <span className="text-[10px] bg-down/20 text-red-300 font-bold px-2.5 py-1 rounded-md">高 關聯度</span>
             </div>
 
             {/* AI Smart Summary */}
-            <div className="p-4 bg-[#fbfcfc] border border-slate-100 rounded-xl space-y-2">
-              <span className="font-bold text-slate-800 flex items-center gap-1 text-[11px]">
-                <Sparkles className="w-4 h-4 text-indigo-500 animate-pulse" />
+            <div className="p-4 bg-white/[0.03] border border-white/[0.06] rounded-xl space-y-2">
+              <span className="font-bold text-snow flex items-center gap-1 text-[11px]">
+                <Sparkles className="w-4 h-4 text-gold animate-pulse" />
                 <span>AI 智能摘要</span>
               </span>
-              <p className="text-slate-600 leading-relaxed">
+              <p className="text-snow-2 leading-relaxed">
                 {currentCompany.aiSummary}
               </p>
             </div>
 
             {/* Market Position & Tech Focus */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="p-4 bg-[#fbfcfc] border border-slate-100 rounded-xl space-y-2">
-                <span className="font-bold text-indigo-800 flex items-center gap-1 text-[11px]">
+              <div className="p-4 bg-white/[0.03] border border-white/[0.06] rounded-xl space-y-2">
+                <span className="font-bold text-gold flex items-center gap-1 text-[11px]">
                   <span>⚓ 市場定位</span>
                 </span>
                 <div className="space-y-1">
                   <div className="flex items-center gap-1.5">
-                    <span className="h-2 w-2 rounded-full bg-emerald-500 inline-block"></span>
-                    <strong className="text-[#111827] text-[11px] font-extrabold">{currentCompany.marketPosition.title}</strong>
+                    <span className="h-2 w-2 rounded-full bg-up inline-block"></span>
+                    <strong className="text-snow text-[11px] font-bold">{currentCompany.marketPosition.title}</strong>
                   </div>
-                  <p className="text-slate-500 leading-relaxed text-[11px]">
+                  <p className="text-snow-muted leading-relaxed text-[11px]">
                     {currentCompany.marketPosition.description}
                   </p>
                 </div>
               </div>
 
-              <div className="p-4 bg-[#fbfcfc] border border-slate-100 rounded-xl space-y-2">
-                <span className="font-bold text-slate-800 flex items-center gap-1 text-[11px]">
+              <div className="p-4 bg-white/[0.03] border border-white/[0.06] rounded-xl space-y-2">
+                <span className="font-bold text-snow flex items-center gap-1 text-[11px]">
                   <span>⚙️ 技術重心</span>
                 </span>
-                <div className="space-y-1.5 text-slate-600 font-sans">
-                  <strong className="text-[#111827] font-semibold block">{currentCompany.techFocus.title}</strong>
-                  <ul className="list-disc pl-4 space-y-1 text-slate-500 text-[10.5px]">
+                <div className="space-y-1.5 text-snow-2">
+                  <strong className="text-snow font-semibold block">{currentCompany.techFocus.title}</strong>
+                  <ul className="list-disc pl-4 space-y-1 text-snow-muted text-[10.5px]">
                     {currentCompany.techFocus.points.map((pt, i) => (
                       <li key={i}>{pt}</li>
                     ))}
@@ -396,14 +377,15 @@ export default function CompanyDatabase() {
 
             {/* Upgrade tip if not upgraded yet */}
             {!isUpgraded && (
-              <div className="bg-[#FFEFE7] border border-[#FFD0B3] p-3 rounded-xl flex justify-between items-center flex-wrap gap-2.5">
+              <div className="bg-gold/[0.08] border border-gold/25 p-3 rounded-xl flex justify-between items-center flex-wrap gap-2.5">
                 <div className="flex items-center gap-2">
-                  <Coffee className="w-4 h-4 text-[#FF5500] shrink-0" />
-                  <span className="text-[10.5px] text-[#6A300F] font-bold">一個月一杯咖啡支持作者，並解鎖完整深度分析</span>
+                  <Coffee className="w-4 h-4 text-gold shrink-0" />
+                  <span className="text-[10.5px] text-amber-200/90 font-bold">一個月一杯咖啡支持作者，並解鎖完整深度分析</span>
                 </div>
-                <button 
+                <button
                   onClick={handleUpgrade}
-                  className="bg-[#FFA366] hover:bg-[#FF7A30] text-slate-900 font-extrabold px-3 py-1 rounded-lg text-[10px] transition"
+                  className="text-[#1a1205] font-bold px-3 py-1 rounded-lg text-[10px] transition hover:brightness-110"
+                  style={{ background: 'linear-gradient(180deg,#facc15,#f59e0b)' }}
                 >
                   登入升級
                 </button>
@@ -412,70 +394,70 @@ export default function CompanyDatabase() {
 
             {/* Key Products & Clients */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="p-4 bg-[#fbfcfc] border border-slate-100 rounded-xl space-y-1">
-                <span className="font-bold text-slate-800 flex items-center gap-1 text-[11px]">
-                  <Briefcase className="w-3.5 h-3.5 text-indigo-500" />
+              <div className="p-4 bg-white/[0.03] border border-white/[0.06] rounded-xl space-y-1">
+                <span className="font-bold text-snow flex items-center gap-1 text-[11px]">
+                  <Briefcase className="w-3.5 h-3.5 text-gold" />
                   <span>主要產品</span>
                 </span>
-                <p className="text-slate-600 leading-relaxed style-preserve-nl">
+                <p className="text-snow-2 leading-relaxed style-preserve-nl">
                   {currentCompany.keyProduct}
                 </p>
               </div>
 
-              <div className="p-4 bg-[#fbfcfc] border border-slate-100 rounded-xl space-y-1">
-                <span className="font-bold text-slate-800 flex items-center gap-1 text-[11px]">
-                  <Activity className="w-3.5 h-3.5 text-indigo-500" />
+              <div className="p-4 bg-white/[0.03] border border-white/[0.06] rounded-xl space-y-1">
+                <span className="font-bold text-snow flex items-center gap-1 text-[11px]">
+                  <Activity className="w-3.5 h-3.5 text-gold" />
                   <span>主要客戶</span>
                 </span>
-                <p className="text-slate-600 leading-relaxed style-preserve-nl">
+                <p className="text-snow-2 leading-relaxed style-preserve-nl">
                   {currentCompany.keyClient}
                 </p>
               </div>
             </div>
 
-            {/* SWOT Quadrant Matrix (Image 2 and 3 style) */}
+            {/* SWOT Quadrant Matrix */}
             <div className="space-y-2">
-              <h3 className="font-bold text-slate-800 text-xs flex items-center gap-1.5 border-t border-slate-100 pt-3">
+              <h3 className="font-satoshi font-medium text-snow text-xs flex items-center gap-1.5 border-t border-white/[0.06] pt-3">
                 🎯 企業 SWOT 深度競爭分析 (Strengths / Weaknesses / Opportunities / Threats)
               </h3>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3 pb-2 relative">
                 {/* Strength block */}
-                <div className="p-3 bg-emerald-50/40 border border-emerald-100/60 rounded-xl space-y-1 group">
-                  <h4 className="font-bold text-emerald-800 flex items-center gap-1 text-[10.5px]">
+                <div className="p-3 bg-up/[0.08] border border-up/20 rounded-xl space-y-1 group">
+                  <h4 className="font-bold text-emerald-300 flex items-center gap-1 text-[10.5px]">
                     <span className="text-xs">📈</span> 優勢 (S)
                   </h4>
-                  <p className="text-slate-600 leading-relaxed text-[10.5px]">
+                  <p className="text-snow-2 leading-relaxed text-[10.5px]">
                     {currentCompany.swot.strengths}
                   </p>
                 </div>
 
                 {/* Weakness block */}
-                <div className="p-3 bg-blue-50/40 border border-blue-100/60 rounded-xl space-y-1 group">
-                  <h4 className="font-bold text-blue-800 flex items-center gap-1 text-[10.5px]">
+                <div className="p-3 bg-blue-500/[0.08] border border-blue-400/20 rounded-xl space-y-1 group">
+                  <h4 className="font-bold text-blue-300 flex items-center gap-1 text-[10.5px]">
                     <span className="text-xs">📉</span> 劣勢 (W)
                   </h4>
-                  <p className="text-slate-600 leading-relaxed text-[10.5px]">
+                  <p className="text-snow-2 leading-relaxed text-[10.5px]">
                     {currentCompany.swot.weaknesses}
                   </p>
                 </div>
 
                 {/* Opportunity block */}
-                <div className="p-3 bg-purple-50/40 border border-purple-100/60 rounded-xl space-y-1 group">
-                  <h4 className="font-bold text-purple-800 flex items-center gap-1 text-[10.5px]">
+                <div className="p-3 bg-purple-500/[0.08] border border-purple-400/20 rounded-xl space-y-1 group">
+                  <h4 className="font-bold text-purple-300 flex items-center gap-1 text-[10.5px]">
                     <span className="text-xs">🌟</span> 機會 (O)
                   </h4>
-                  <p className="text-slate-600 leading-relaxed text-[10.5px]">
+                  <p className="text-snow-2 leading-relaxed text-[10.5px]">
                     {currentCompany.swot.opportunities}
                   </p>
                 </div>
 
                 {/* Threats block */}
-                <div className="p-3 bg-red-50/40 border border-red-100/60 rounded-xl space-y-1 group">
-                  <h4 className="font-bold text-[#D93F4F] flex items-center gap-1 text-[10.5px]">
+                <div className="p-3 bg-down/[0.08] border border-down/20 rounded-xl space-y-1 group">
+                  <h4 className="font-bold text-red-300 flex items-center gap-1 text-[10.5px]">
                     <span className="text-xs">⚠️</span> 威脅 (T)
                   </h4>
-                  <p className="text-slate-600 leading-relaxed text-[10.5px]">
+                  <p className="text-snow-2 leading-relaxed text-[10.5px]">
                     {currentCompany.swot.threats}
                   </p>
                 </div>

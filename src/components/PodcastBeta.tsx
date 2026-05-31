@@ -186,13 +186,13 @@ export default function PodcastBeta() {
   const getSentimentColor = (sentiment: string) => {
     switch (sentiment) {
       case 'positive':
-        return 'bg-red-50 text-red-600 border-red-200';
+        return 'bg-down/15 text-red-300 border-down/30';
       case 'observation':
-        return 'bg-amber-50 text-amber-700 border-amber-200';
+        return 'bg-gold/15 text-amber-300 border-gold/30';
       case 'negative':
-        return 'bg-emerald-50 text-emerald-600 border-emerald-200';
+        return 'bg-up/15 text-emerald-300 border-up/30';
       default:
-        return 'bg-slate-50 text-slate-600 border-slate-200';
+        return 'bg-white/[0.06] text-snow-2 border-white/10';
     }
   };
 
@@ -212,111 +212,111 @@ export default function PodcastBeta() {
   return (
     <div className="space-y-6">
       {/* Podcaster Header Card (Matching Image 4) */}
-      <div className="bg-white p-5 rounded-2xl border border-slate-100 shadow-3xs relative overflow-hidden">
+      <div className="glass-card p-5 rounded-2xl relative overflow-hidden">
         {/* Banner colors at top matching Image 4 */}
-        <div className="absolute top-0 left-0 right-0 h-2 bg-gradient-to-r from-red-500 via-amber-500 to-indigo-600" />
+        <div className="absolute top-0 left-0 right-0 h-2 bg-gradient-to-r from-down via-gold to-gold-soft" />
 
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 pt-3">
           <div className="flex items-center gap-3.5">
             {/* Logo box */}
-            <div className="w-12 h-12 bg-[#FF4560] text-white rounded-2xl flex items-center justify-center font-extrabold text-xl shadow-md shrink-0">
+            <div className="w-12 h-12 bg-down text-white rounded-2xl flex items-center justify-center font-extrabold text-xl shadow-md shrink-0">
               股
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <h2 className="font-extrabold text-slate-900 text-base">股癌 @Gooaye</h2>
-                <span className="text-[10px] bg-slate-100 text-slate-500 px-1.5 py-0.5 rounded leading-none font-bold">熱門理財</span>
+                <h2 className="font-satoshi font-medium text-snow text-base">股癌 @Gooaye</h2>
+                <span className="text-[10px] bg-white/[0.06] text-snow-muted px-1.5 py-0.5 rounded leading-none font-bold">熱門理財</span>
               </div>
-              <p className="text-[11px] text-slate-500 leading-relaxed font-sans max-w-lg mt-0.5">
+              <p className="text-[11px] text-snow-muted leading-relaxed max-w-lg mt-0.5">
                 晦澀金融投資知識直白講，重要海內外時事輕鬆談；不管老司機還是菜雞，散戶們都進來取暖，也在這裡找到樂趣。
               </p>
             </div>
           </div>
 
           <div className="flex gap-1.5 flex-wrap shrink-0">
-            <a href="https://podcasts.apple.com/tw/podcast/gooaye-%E8%82%A1%E7%99%8C/id1500839292" target="_blank" className="text-[10.5px] bg-[#E8F5E9] hover:bg-[#C8E6C9] text-[#2E7D32] font-semibold px-3 py-1.5 rounded-lg flex items-center gap-1 transition">
-              <Play className="w-3 h-3 fill-[#2E7D32]" />
+            <a href="https://podcasts.apple.com/tw/podcast/gooaye-%E8%82%A1%E7%99%8C/id1500839292" target="_blank" className="text-[10.5px] bg-up/15 hover:bg-up/25 text-emerald-300 font-semibold px-3 py-1.5 rounded-lg flex items-center gap-1 transition">
+              <Play className="w-3 h-3 fill-emerald-300" />
               <span>Podcast</span>
             </a>
-            <a href="https://www.youtube.com/@Gooaye" target="_blank" className="text-[10.5px] bg-[#FFEAEA] hover:bg-[#FFD2D2] text-[#D32F2F] font-semibold px-3 py-1.5 rounded-lg flex items-center gap-1 transition">
+            <a href="https://www.youtube.com/@Gooaye" target="_blank" className="text-[10.5px] bg-down/15 hover:bg-down/25 text-red-300 font-semibold px-3 py-1.5 rounded-lg flex items-center gap-1 transition">
               <span>YouTube</span>
             </a>
-            <a href="https://www.facebook.com/Gooaye/" target="_blank" className="text-[10.5px] bg-[#EBF3FF] hover:bg-[#D4E6FF] text-[#1877F2] font-semibold px-3 py-1.5 rounded-lg flex items-center gap-1 transition">
+            <a href="https://www.facebook.com/Gooaye/" target="_blank" className="text-[10.5px] bg-blue-500/15 hover:bg-blue-500/25 text-blue-300 font-semibold px-3 py-1.5 rounded-lg flex items-center gap-1 transition">
               <span>Facebook</span>
             </a>
           </div>
         </div>
 
         {/* Counts matching Image 4 */}
-        <div className="grid grid-cols-2 gap-4 mt-5 pt-4 border-t border-slate-50 max-w-sm">
-          <div className="p-2.5 bg-[#FAFBFB] rounded-xl border border-slate-100 flex items-center gap-3">
+        <div className="grid grid-cols-2 gap-4 mt-5 pt-4 border-t border-white/[0.06] max-w-sm">
+          <div className="p-2.5 bg-white/[0.03] rounded-xl border border-white/[0.06] flex items-center gap-3">
             <span className="text-xl">📖</span>
             <div>
-              <span className="text-[10px] text-slate-400 block font-semibold leading-none mb-0.5">收錄集數</span>
-              <strong className="text-slate-800 text-sm font-extrabold font-mono">19 集</strong>
+              <span className="text-[10px] text-snow-muted block font-semibold leading-none mb-0.5">收錄集數</span>
+              <strong className="text-snow text-sm font-bold font-mono">19 集</strong>
             </div>
           </div>
 
-          <div className="p-2.5 bg-[#FAFBFB] rounded-xl border border-slate-100 flex items-center gap-3">
+          <div className="p-2.5 bg-white/[0.03] rounded-xl border border-white/[0.06] flex items-center gap-3">
             <span className="text-xl">🗂️</span>
             <div>
-              <span className="text-[10px] text-slate-400 block font-semibold leading-none mb-0.5">涵蓋題材</span>
-              <strong className="text-slate-800 text-sm font-extrabold font-mono">42 項</strong>
+              <span className="text-[10px] text-snow-muted block font-semibold leading-none mb-0.5">涵蓋題材</span>
+              <strong className="text-snow text-sm font-bold font-mono">42 項</strong>
             </div>
           </div>
         </div>
 
         {/* Disclaimer warning line matching Image 4 */}
-        <p className="text-[10px] text-slate-400 mt-4 leading-normal">
+        <p className="text-[10px] text-snow-muted mt-4 leading-normal">
           本頁內容僅為自動整理理財節目提及之題材與邏輯彙整，不構成任何明確投資買賣建議。所有分析均為人工與 AI 模型聯合整理，可能存在延遲，請讀者以原始節目音訊與個人風險承擔為核心。
         </p>
       </div>
 
       {/* 股癌最新一集速報與投資建議 (核實自動更新 - 完美回答「最新一集的最重要買入股票推薦」) */}
-      <div id="latest-ep-rec-banner" className="bg-gradient-to-r from-red-50 to-indigo-50/50 border border-red-100 p-5 rounded-2xl flex flex-col md:flex-row justify-between items-start md:items-center gap-4 shadow-3xs relative overflow-hidden">
+      <div id="latest-ep-rec-banner" className="glass-card border-down/20 p-5 rounded-2xl flex flex-col md:flex-row justify-between items-start md:items-center gap-4 relative overflow-hidden">
         {/* Decorative corner tag */}
-        <div className="absolute top-0 right-0 bg-red-500 text-white font-mono text-[9px] font-extrabold px-3 py-1 rounded-bl-xl tracking-wider uppercase">
+        <div className="absolute top-0 right-0 bg-down text-white font-mono text-[9px] font-extrabold px-3 py-1 rounded-bl-xl tracking-wider uppercase">
           LIVE VERIFIED
         </div>
 
         <div className="space-y-1.5 flex-1">
           <div className="flex items-center gap-2 flex-wrap text-xs md:text-sm">
             <span className="flex h-2 w-2 relative">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-down opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-down"></span>
             </span>
-            <span className="text-[10px] bg-red-500 text-white font-extrabold px-2 py-0.5 rounded leading-none uppercase tracking-wider">
+            <span className="text-[10px] bg-down text-white font-extrabold px-2 py-0.5 rounded leading-none uppercase tracking-wider">
               最新一集個股推薦
             </span>
-            <span className="font-bold text-slate-800 text-xs bg-slate-100 px-2.5 py-0.5 rounded-lg border border-slate-200/50">
+            <span className="font-bold text-snow-2 text-xs bg-white/[0.06] px-2.5 py-0.5 rounded-lg border border-white/10">
               {episodes[0]?.ep || 'EP663'} 🦘 2026-05-20
             </span>
           </div>
-          <h3 className="font-extrabold text-[#111827] text-md leading-snug">
+          <h3 className="font-satoshi font-medium text-snow text-md leading-snug">
             最新一集建議買什麼股票？
           </h3>
-          <p className="text-[11.5px] text-slate-600 max-w-4xl leading-relaxed">
-            股癌今日最新一集 (<strong>{episodes[0]?.ep || 'EP663'}</strong>) 經系統深度核實，他指出台積電技術論壇再次確立光通訊與 CPO 的全球爆發大趨勢，<strong>「利多出盡只是短期雜訊」</strong>。
-            個股與題材方面他強烈看多：<strong>被動元件大廠 (2327 國巨、2492 華新科)</strong> 開啟了現貨市場的瘋狂掃貨及漲價效應，
-            並看好博通 (<strong>AVGO.US</strong>) 的 AI ASIC 多元晶片路線圖、以及網通光通訊指標 <strong>(3081 聯亞、3450 聯鈞)</strong> 技術承壓拉回的長線高確信布局機會！
+          <p className="text-[11.5px] text-snow-2 max-w-4xl leading-relaxed">
+            股癌今日最新一集 (<strong className="text-snow">{episodes[0]?.ep || 'EP663'}</strong>) 經系統深度核實，他指出台積電技術論壇再次確立光通訊與 CPO 的全球爆發大趨勢，<strong className="text-snow">「利多出盡只是短期雜訊」</strong>。
+            個股與題材方面他強烈看多：<strong className="text-snow">被動元件大廠 (2327 國巨、2492 華新科)</strong> 開啟了現貨市場的瘋狂掃貨及漲價效應，
+            並看好博通 (<strong className="text-snow">AVGO.US</strong>) 的 AI ASIC 多元晶片路線圖、以及網通光通訊指標 <strong className="text-snow">(3081 聯亞、3450 聯鈞)</strong> 技術承壓拉回的長線高確信布局機會！
           </p>
-          <div className="flex items-center gap-4 text-[10.5px] text-slate-400 pt-0.5 font-mono">
+          <div className="flex items-center gap-4 text-[10.5px] text-snow-muted pt-0.5 font-mono">
             <span>資料自動更新排程：每小時</span>
-            <span className="text-indigo-600 font-sans font-semibold">數據狀態：與 Apple Podcast、SoundOn 新增集數 100% 同步核實</span>
+            <span className="text-gold font-sans font-semibold">數據狀態：與 Apple Podcast、SoundOn 新增集數 100% 同步核實</span>
           </div>
         </div>
 
         <div className="flex flex-col gap-2 shrink-0 w-full md:w-auto">
-          <button 
+          <button
             type="button"
             onClick={() => loadEpisodes(true)}
             disabled={isRefreshingLive}
-            className="bg-white hover:bg-slate-50 border border-slate-200 text-slate-700 text-[11px] font-bold px-3.5 py-2.5 rounded-xl transition flex items-center justify-center gap-1.5 shadow-3xs disabled:opacity-60 cursor-pointer"
+            className="bg-white/[0.05] hover:bg-white/[0.08] border border-white/10 text-snow-2 text-[11px] font-bold px-3.5 py-2.5 rounded-xl transition flex items-center justify-center gap-1.5 disabled:opacity-60 cursor-pointer"
           >
-            <RefreshCw className={`w-3.5 h-3.5 text-indigo-600 ${isRefreshingLive ? 'animate-spin' : ''}`} />
+            <RefreshCw className={`w-3.5 h-3.5 text-gold ${isRefreshingLive ? 'animate-spin' : ''}`} />
             <span>{isRefreshingLive ? '正在與 Apple Podcasts 核實核查中...' : '進行自動核查與即時更新'}</span>
           </button>
-          
+
           <button
             type="button"
             onClick={() => {
@@ -324,7 +324,8 @@ export default function PodcastBeta() {
               if (el) el.scrollIntoView({ behavior: 'smooth' });
               setActiveTabByEp(prev => ({ ...prev, [episodes[0]?.ep || 'EP663']: 'strategy' }));
             }}
-            className="bg-indigo-600 hover:bg-indigo-700 text-white text-[11px] font-bold px-3.5 py-2.5 rounded-xl transition shadow-3xs text-center cursor-pointer"
+            className="text-[#1a1205] text-[11px] font-bold px-3.5 py-2.5 rounded-xl transition text-center cursor-pointer hover:brightness-110"
+            style={{ background: 'linear-gradient(180deg,#facc15,#f59e0b)' }}
           >
             查看實戰個股策略 &gt;
           </button>
@@ -332,28 +333,29 @@ export default function PodcastBeta() {
       </div>
 
       {/* NEW FEATURE: AI Podcast Search Advisor (Answers: "我要你幫我在最新的podcast中搜索題材並介紹...") */}
-      <div className="bg-white p-5 rounded-2xl border border-slate-100 shadow-3xs space-y-3.5">
-        <h3 className="font-extrabold text-slate-800 text-xs flex items-center gap-2">
-          <Sparkles className="w-4 h-4 text-amber-500 animate-spin-slow" />
+      <div className="glass-card p-5 rounded-2xl space-y-3.5">
+        <h3 className="font-satoshi font-medium text-snow text-sm flex items-center gap-2">
+          <Sparkles className="w-4 h-4 text-gold" />
           <span>股癌節目智慧專屬搜尋與投資建議 AI 分析</span>
         </h3>
-        <p className="text-[11px] text-slate-400 leading-normal">
+        <p className="text-[11px] text-snow-muted leading-normal">
           輸入任何您感興趣的個股或題材（如：散熱、被動元件、台積電、水冷歧管），AI 將自動搜檢股癌於近期節目提及的評論角度、預計操作，並產出極其清晰的投資建議！
         </p>
 
         <div className="flex gap-2">
-          <input 
-            type="text" 
+          <input
+            type="text"
             value={podcastQuery}
             onChange={(e) => setPodcastQuery(e.target.value)}
             onKeyDown={(e) => { if (e.key === 'Enter') executePodcastAIResearch(); }}
             placeholder="請輸入欲搜尋的題材或代號，如「水冷散熱」..."
-            className="flex-1 px-3 py-2.5 text-xs bg-slate-50 border border-slate-200 focus:bg-white focus:ring-2 focus:ring-indigo-100 rounded-xl outline-hidden transition"
+            className="flex-1 px-3 py-2.5 text-xs bg-white/[0.05] border border-white/10 text-snow placeholder:text-snow-muted/70 focus:border-gold/40 focus:bg-white/[0.07] rounded-xl outline-none transition"
           />
-          <button 
+          <button
             onClick={executePodcastAIResearch}
             disabled={isSynthesizing || !podcastQuery.trim()}
-            className="bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold px-5 py-2.5 rounded-xl transition shrink-0 disabled:opacity-50"
+            className="text-[#1a1205] text-xs font-bold px-5 py-2.5 rounded-xl transition shrink-0 disabled:opacity-50 hover:brightness-110"
+            style={{ background: 'linear-gradient(180deg,#facc15,#f59e0b)' }}
           >
             {isSynthesizing ? 'AI 搜檢分析中...' : 'AI 節目智慧搜檢'}
           </button>
@@ -361,36 +363,36 @@ export default function PodcastBeta() {
 
         {/* Display Simulated AI Synthesis results */}
         {isSynthesizing && (
-          <div className="p-6 bg-slate-50 rounded-xl border border-dashed border-slate-200 text-center space-y-2 py-8 animate-pulse text-xs">
-            <div className="w-6 h-6 border-2 border-indigo-600 border-t-transparent rounded-full animate-spin mx-auto"></div>
-            <p className="font-semibold text-slate-600">正在橫向調閱並精算 股癌 近三週錄音逐字稿與主題庫對比中...</p>
+          <div className="p-6 bg-white/[0.03] rounded-xl border border-dashed border-white/15 text-center space-y-2 py-8 animate-pulse text-xs">
+            <div className="w-6 h-6 border-2 border-gold border-t-transparent rounded-full animate-spin mx-auto"></div>
+            <p className="font-semibold text-snow-2">正在橫向調閱並精算 股癌 近三週錄音逐字稿與主題庫對比中...</p>
           </div>
         )}
 
         {aiReport && (
-          <div className="bg-indigo-50/30 p-4 border border-indigo-100/50 rounded-xl space-y-3 animate-fade-in text-xs leading-normal">
-            <div className="flex justify-between items-center border-b border-indigo-100/30 pb-2 flex-wrap gap-2">
+          <div className="bg-white/[0.03] p-4 border border-white/[0.06] rounded-xl space-y-3 animate-fade-in text-xs leading-normal">
+            <div className="flex justify-between items-center border-b border-white/[0.06] pb-2 flex-wrap gap-2">
               <div className="flex items-center gap-1.5">
                 <span className="text-base">💡</span>
-                <strong className="text-indigo-900 text-sm font-extrabold">【{aiReport.topic}】熱門題材 AI 分析報告</strong>
+                <strong className="text-snow text-sm font-bold">【{aiReport.topic}】熱門題材 AI 分析報告</strong>
               </div>
-              <span className="font-mono text-[10px] text-indigo-700 bg-indigo-100/60 px-2 py-0.5 rounded-md font-bold">
+              <span className="font-mono text-[10px] text-gold bg-gold/15 px-2 py-0.5 rounded-md font-bold">
                 來源：{aiReport.epSource}
               </span>
             </div>
 
             <div className="space-y-1">
-              <span className="font-bold text-slate-800 block text-[11px]">🎙️ 股癌觀點與近期評介：</span>
-              <p className="text-slate-600 leading-relaxed">
+              <span className="font-bold text-snow block text-[11px]">🎙️ 股癌觀點與近期評介：</span>
+              <p className="text-snow-2 leading-relaxed">
                 {aiReport.summary}
               </p>
             </div>
 
             <div className="space-y-1 pt-1.5">
-              <span className="font-bold text-slate-800 block text-[11px]">📈 推薦與關聯個股：</span>
+              <span className="font-bold text-snow block text-[11px]">📈 推薦與關聯個股：</span>
               <div className="flex flex-wrap gap-1.5">
                 {aiReport.stocks.map((st: string) => (
-                  <span key={st} className="text-slate-600 bg-white border border-slate-200 px-2 py-1 rounded-lg font-semibold text-[10px]">
+                  <span key={st} className="text-snow-2 bg-white/[0.06] border border-white/10 px-2 py-1 rounded-lg font-semibold text-[10px]">
                     {st}
                   </span>
                 ))}
@@ -398,15 +400,15 @@ export default function PodcastBeta() {
             </div>
 
             {/* Actionable Suggestions */}
-            <div className="space-y-1.5 pt-2 border-t border-indigo-100/30">
-              <span className="font-bold text-indigo-900 block text-[11px] flex items-center gap-1">
-                <TrendingUp className="w-4 h-4 text-indigo-600" />
+            <div className="space-y-1.5 pt-2 border-t border-white/[0.06]">
+              <span className="font-bold text-gold block text-[11px] flex items-center gap-1">
+                <TrendingUp className="w-4 h-4 text-gold" />
                 <span>股癌專屬：投資操作與布局建議</span>
               </span>
-              <div className="bg-white/80 p-3 rounded-lg border border-indigo-100/20 text-slate-600 space-y-1.5">
+              <div className="bg-white/[0.04] p-3 rounded-lg border border-white/[0.06] text-snow-2 space-y-1.5">
                 {aiReport.advices.map((adv: string, idx: number) => (
                   <div key={idx} className="flex gap-2 text-[11px] leading-relaxed">
-                    <span className="h-5 w-5 rounded-full bg-indigo-50 text-indigo-700 font-bold flex items-center justify-center shrink-0">
+                    <span className="h-5 w-5 rounded-full bg-gold/15 text-gold font-bold flex items-center justify-center shrink-0">
                       {idx + 1}
                     </span>
                     <p dangerouslySetInnerHTML={{ __html: adv.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') }} />
@@ -419,19 +421,19 @@ export default function PodcastBeta() {
       </div>
 
       {/* Custom Filter Bar (Matching Image 4) */}
-      <div className="bg-white p-4 rounded-xl border border-slate-100 shadow-3xs space-y-3">
-        <h3 className="font-extrabold text-slate-800 text-xs flex items-center gap-1.5">
-          <Filter className="w-4 h-4 text-indigo-600" />
+      <div className="glass-card p-4 rounded-xl space-y-3">
+        <h3 className="font-satoshi font-medium text-snow text-sm flex items-center gap-1.5">
+          <Filter className="w-4 h-4 text-gold" />
           <span>篩選集數</span>
         </h3>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
           <div className="space-y-1 text-xs">
-            <span className="text-slate-400 font-medium block">題材別名</span>
-            <select 
+            <span className="text-snow-muted font-medium block">題材別名</span>
+            <select
               value={selectedTheme}
               onChange={(e) => setSelectedTheme(e.target.value)}
-              className="w-full px-2.5 py-2 border border-slate-200 rounded-lg bg-slate-50 text-slate-700 font-medium text-xs font-sans"
+              className="w-full px-2.5 py-2 border border-white/10 rounded-lg bg-white/[0.05] text-snow-2 font-medium text-xs [&>option]:bg-snow-elev [&>option]:text-snow"
             >
               <option value="全部題材">全部題材</option>
               <option value="被動元件">被動元件</option>
@@ -442,7 +444,7 @@ export default function PodcastBeta() {
           </div>
 
           <div className="space-y-1 text-xs">
-            <span className="text-slate-400 font-medium block">氣氛與情緒導向</span>
+            <span className="text-snow-muted font-medium block">氣氛與情緒導向</span>
             {/* Buttons Row */}
             <div className="flex flex-wrap gap-1 pt-1">
               {(['all', 'positive', 'observation', 'neutral', 'negative'] as const).map((sent) => (
@@ -450,10 +452,11 @@ export default function PodcastBeta() {
                   key={sent}
                   onClick={() => setSelectedSentiment(sent)}
                   className={`text-[10.5px] px-3 py-1 font-bold rounded-lg transition ${
-                    selectedSentiment === sent 
-                      ? 'bg-indigo-600 text-white' 
-                      : 'bg-slate-50 text-slate-500 hover:bg-slate-100'
+                    selectedSentiment === sent
+                      ? 'text-[#1a1205]'
+                      : 'bg-white/[0.05] text-snow-muted hover:bg-white/[0.08]'
                   }`}
+                  style={selectedSentiment === sent ? { background: 'linear-gradient(180deg,#facc15,#f59e0b)' } : undefined}
                 >
                   {sent === 'all' ? '全部' : getSentimentText(sent)}
                 </button>
@@ -464,10 +467,10 @@ export default function PodcastBeta() {
       </div>
 
       {/* Episodes List (Matching Image 4) */}
-      <div className="space-y-4">
+      <div id="ep-list-container" className="space-y-4">
         <div className="flex justify-between items-center text-xs">
-          <span className="text-slate-400">集數列表</span>
-          <span className="text-slate-400 font-medium font-mono">共 {filteredEpisodes.length} 集 · 由新到舊</span>
+          <span className="text-snow-muted">集數列表</span>
+          <span className="text-snow-muted font-medium font-mono">共 {filteredEpisodes.length} 集 · 由新到舊</span>
         </div>
 
         {filteredEpisodes.map((epItem) => {
@@ -475,25 +478,28 @@ export default function PodcastBeta() {
           const sentColorClass = getSentimentColor(epItem.sentiment);
 
           return (
-            <div key={epItem.ep} className="bg-white p-5 rounded-2xl border border-slate-100 shadow-3xs space-y-4 hover:border-slate-300 transition duration-150">
+            <div key={epItem.ep} className="glass-card p-5 rounded-2xl space-y-4 hover:border-gold/30 transition duration-150">
               {/* Card Header */}
               <div className="flex justify-between items-start flex-wrap gap-2">
                 <div className="space-y-1">
                   <div className="flex items-center gap-2">
-                    <span className="font-mono text-[10px] font-bold bg-indigo-50 text-indigo-600 px-2 py-0.5 rounded border border-indigo-100/50">
+                    <span className="font-mono text-[10px] font-bold bg-gold/15 text-gold px-2 py-0.5 rounded border border-gold/20">
                       {epItem.ep}
                     </span>
-                    <span className="text-[10.5px] text-slate-400 font-semibold font-sans">{epItem.date}</span>
+                    <span className="text-[10.5px] text-snow-muted font-semibold">{epItem.date}</span>
+                    <span className={`text-[10px] font-bold px-2 py-0.5 rounded border ${sentColorClass}`}>
+                      {getSentimentText(epItem.sentiment)}
+                    </span>
                   </div>
-                  <h3 className="font-extrabold text-[#111827] text-md leading-snug hover:text-indigo-600 cursor-pointer">
+                  <h3 className="font-satoshi font-medium text-snow text-md leading-snug hover:text-gold cursor-pointer">
                     {epItem.title}
                   </h3>
                 </div>
 
-                <a 
+                <a
                   href="https://podcasts.apple.com/tw/podcast/gooaye-%E8%82%A1%E7%99%8C/id1500839292"
                   target="_blank"
-                  className="text-slate-300 hover:text-indigo-600 p-1.5 hover:bg-slate-50 rounded-lg transition shrink-0"
+                  className="text-snow-muted hover:text-gold p-1.5 hover:bg-white/[0.06] rounded-lg transition shrink-0"
                   title="開起原始 Apple Podcast"
                 >
                   <ExternalLink className="w-4 h-4" />
@@ -501,20 +507,20 @@ export default function PodcastBeta() {
               </div>
 
               {/* Main short commentary */}
-              <p className="text-xs text-slate-500 leading-relaxed font-sans border-l-2 border-indigo-400 pl-3.5 bg-slate-50/40 py-2 rounded-r-lg">
+              <p className="text-xs text-snow-2 leading-relaxed border-l-2 border-gold/50 pl-3.5 bg-white/[0.03] py-2 rounded-r-lg">
                 {epItem.summary}
               </p>
 
-              {/* Sub-tab helpers in the card (🏷️ 產業主題 / 📈 個股觀點 ...) matching Image 4 */}
-              <div className="flex flex-wrap gap-1.5 border-b border-slate-50 pb-1 pt-1 text-[11px] font-semibold">
+              {/* Sub-tab helpers in the card */}
+              <div className="flex flex-wrap gap-1.5 border-b border-white/[0.06] pb-1 pt-1 text-[11px] font-semibold">
                 {helperTabs.map((ht) => (
                   <button
                     key={ht.key}
                     onClick={() => handleEpTabChange(epItem.ep, ht.key)}
                     className={`pb-1.5 px-0.5 transition ${
-                      isSelectedTab === ht.key 
-                        ? 'text-indigo-600 border-b-2 border-indigo-600 font-bold' 
-                        : 'text-slate-400 hover:text-slate-600'
+                      isSelectedTab === ht.key
+                        ? 'text-gold border-b-2 border-gold font-bold'
+                        : 'text-snow-muted hover:text-snow-2'
                     }`}
                   >
                     {ht.label}
@@ -526,11 +532,11 @@ export default function PodcastBeta() {
               <div className="text-xs leading-relaxed animate-fade-in">
                 {isSelectedTab === 'themes' && (
                   <div className="space-y-1.5">
-                    <span className="font-bold text-slate-800 block text-[10.5px]">🔥 核心研究的主體產業板塊：</span>
-                    <p className="text-slate-600">{epItem.industryTopic}</p>
+                    <span className="font-bold text-snow block text-[10.5px]">🔥 核心研究的主體產業板塊：</span>
+                    <p className="text-snow-2">{epItem.industryTopic}</p>
                     <div className="flex flex-wrap gap-1 mt-1">
                       {epItem.themes.map(t => (
-                        <span key={t} className="text-[10px] bg-slate-100 text-slate-600 px-2 py-0.5 rounded font-mono font-medium">
+                        <span key={t} className="text-[10px] bg-white/[0.06] text-snow-2 px-2 py-0.5 rounded font-mono font-medium">
                           #{t}
                         </span>
                       ))}
@@ -540,10 +546,10 @@ export default function PodcastBeta() {
 
                 {isSelectedTab === 'stocks' && (
                   <div className="space-y-1.5">
-                    <span className="font-bold text-slate-800 block text-[10.5px]">🎯 股癌在本集提及的標的與評論：</span>
+                    <span className="font-bold text-snow block text-[10.5px]">🎯 股癌在本集提及的標的與評論：</span>
                     <div className="flex flex-wrap gap-2">
                       {epItem.individualStocks.map(st => (
-                        <span key={st} className="text-indigo-700 bg-indigo-50 border border-indigo-100/50 px-2.5 py-1 rounded-xl text-[10.5px] font-bold">
+                        <span key={st} className="text-gold bg-gold/10 border border-gold/20 px-2.5 py-1 rounded-xl text-[10.5px] font-bold">
                           {st}
                         </span>
                       ))}
@@ -553,14 +559,14 @@ export default function PodcastBeta() {
 
                 {isSelectedTab === 'strategy' && (
                   <div className="space-y-1.5">
-                    <span className="font-bold text-rose-600 block text-[11.5px] flex items-center gap-1">
+                    <span className="font-bold text-emerald-400 block text-[11.5px] flex items-center gap-1">
                       <TrendingUp className="w-3.5 h-3.5" />
                       <span>預計操作與布局紀律：</span>
                     </span>
-                    <div className="bg-slate-50/50 p-3 rounded-xl border border-slate-100 text-slate-600 space-y-1">
-                      <p className="font-bold text-[#111827]">目標：{epItem.investmentAdvice.title}</p>
-                      <p className="text-indigo-600 font-semibold text-[10.5px]">行動：{epItem.investmentAdvice.action}</p>
-                      <p className="text-slate-500 text-[10.5px] mt-1 pt-1 border-t border-slate-100/80 leading-relaxed">
+                    <div className="bg-white/[0.03] p-3 rounded-xl border border-white/[0.06] text-snow-2 space-y-1">
+                      <p className="font-bold text-snow">目標：{epItem.investmentAdvice.title}</p>
+                      <p className="text-gold font-semibold text-[10.5px]">行動：{epItem.investmentAdvice.action}</p>
+                      <p className="text-snow-muted text-[10.5px] mt-1 pt-1 border-t border-white/[0.06] leading-relaxed">
                         {epItem.investmentAdvice.details}
                       </p>
                     </div>
@@ -568,12 +574,12 @@ export default function PodcastBeta() {
                 )}
 
                 {isSelectedTab === 'qa' && (
-                  <div className="space-y-2 bg-[#FAFBFB] p-3 rounded-xl border border-slate-100">
+                  <div className="space-y-2 bg-white/[0.03] p-3 rounded-xl border border-white/[0.06]">
                     <div className="space-y-1">
-                      <span className="text-[10px] font-bold text-amber-600 block uppercase">QA精選問答：</span>
-                      <p className="text-slate-600 italic">"問：股癌大您好，最近很多水冷股回檔很多，請問該加倉還是等機櫃正式出貨？"</p>
-                      <p className="text-slate-500 font-sans pl-3 border-l text-[10.5px] leading-relaxed">
-                        <strong className="text-slate-700">癌大回答：</strong> "看你預計拿多少比例做這件事。如果水冷在你總倉位已經有四成了，那完全不需要動，大跌反而是看戲，因為高位估值修正並非基本面垮台，而是籌碼在換手。如果剛起手有一成，分批慢慢吸那是可以的。"
+                      <span className="text-[10px] font-bold text-gold block uppercase">QA精選問答：</span>
+                      <p className="text-snow-2 italic">"問：股癌大您好，最近很多水冷股回檔很多，請問該加倉還是等機櫃正式出貨？"</p>
+                      <p className="text-snow-muted pl-3 border-l border-white/10 text-[10.5px] leading-relaxed">
+                        <strong className="text-snow-2">癌大回答：</strong> "看你預計拿多少比例做這件事。如果水冷在你總倉位已經有四成了，那完全不需要動，大跌反而是看戲，因為高位估值修正並非基本面垮台，而是籌碼在換手。如果剛起手有一成，分批慢慢吸那是可以的。"
                       </p>
                     </div>
                   </div>

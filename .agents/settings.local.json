@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell($env:TEMP)",
+      "PowerShell(Start-Process \"C:\\\\Users\\\\User\\\\AppData\\\\Local\\\\Temp\\\\architecture-review-20260531.html\")",
+      "Bash(ls server_utils*)",
+      "Bash(wc -l src/lib/*.ts src/data/*.ts server_utils*)"
+    ]
+  }
+}

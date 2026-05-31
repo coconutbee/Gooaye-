@@ -127,17 +127,17 @@ export default function DailyFocus({ isTaiwanStyle }: DailyFocusProps) {
 
   const getUpDownColor = (isUp: boolean) => {
     if (isTaiwanStyle) {
-      return isUp ? 'text-red-600 bg-red-50/70' : 'text-emerald-600 bg-emerald-50/70';
+      return isUp ? 'text-red-300 bg-down/15' : 'text-emerald-300 bg-up/15';
     } else {
-      return isUp ? 'text-emerald-600 bg-emerald-50/70' : 'text-red-600 bg-red-50/70';
+      return isUp ? 'text-emerald-300 bg-up/15' : 'text-red-300 bg-down/15';
     }
   };
 
   const getNetColor = (isPositive: boolean) => {
     if (isTaiwanStyle) {
-      return isPositive ? 'text-red-600' : 'text-emerald-600';
+      return isPositive ? 'text-red-400' : 'text-emerald-400';
     } else {
-      return isPositive ? 'text-emerald-600' : 'text-red-600';
+      return isPositive ? 'text-emerald-400' : 'text-red-400';
     }
   };
 
@@ -152,52 +152,52 @@ export default function DailyFocus({ isTaiwanStyle }: DailyFocusProps) {
   return (
     <div className="space-y-6">
       {/* 1. Header Alert banner */}
-      <div className="bg-[#FFF0F2] border border-red-100 text-[#D93F4F] p-3 rounded-xl text-xs flex justify-between items-center shadow-2xs">
+      <div className="glass-card border-down/25 text-red-300 p-3 rounded-xl text-xs flex justify-between items-center">
         <div className="flex items-center gap-2">
           <span className="flex h-2 w-2 relative">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-down opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-down"></span>
           </span>
-          <span className="font-semibold">🔥 重點更新：</span>
-          <span>聯亞光電 (3081) 深度分析與研究圖表已上線 by Vincent</span>
+          <span className="font-semibold text-snow">🔥 重點更新：</span>
+          <span className="text-snow-2">聯亞光電 (3081) 深度分析與研究圖表已上線 by Vincent</span>
         </div>
-        <button 
-          onClick={() => alert('已載入 3081 聯亞光電 研究圖表！歡迎至公司資料庫查閱。')} 
-          className="bg-[#D93F4F] hover:bg-[#B32736] text-white px-2.5 py-1 text-[11px] font-bold rounded-lg transition shrink-0"
+        <button
+          onClick={() => alert('已載入 3081 聯亞光電 研究圖表！歡迎至公司資料庫查閱。')}
+          className="bg-down/90 hover:bg-down text-white px-2.5 py-1 text-[11px] font-bold rounded-lg transition shrink-0"
         >
           查看 &gt;
         </button>
       </div>
 
       {/* 2. Global Index Grid (8 Grid) */}
-      <div className="bg-white p-4 rounded-xl border border-slate-100 shadow-3xs">
+      <div className="glass-card p-4 rounded-xl">
         <div className="flex justify-between items-center mb-3">
-          <div className="flex items-center gap-1.5 text-xs text-slate-500">
-            <Clock className="w-4 h-4 text-slate-400" />
+          <div className="flex items-center gap-1.5 text-xs text-snow-muted">
+            <Clock className="w-4 h-4 text-snow-muted" />
             <span>核心指數與特定概念股即時表現</span>
           </div>
-          <span className="text-[10px] text-slate-400 font-mono">資料更新時間：2026-05-20 22:16:05</span>
+          <span className="text-[10px] text-snow-muted font-mono">資料更新時間：2026-05-20 22:16:05</span>
         </div>
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-2.5">
           {indexes.map((idx, index) => {
             const upColorClasses = getUpDownColor(idx.isUp);
             return (
-              <div 
-                key={index} 
-                className="p-3 bg-[#fbfcfc] border border-slate-50 rounded-xl flex flex-col justify-between hover:border-slate-200 transition duration-150 cursor-pointer group"
+              <div
+                key={index}
+                className="p-3 bg-white/[0.03] border border-white/[0.06] rounded-xl flex flex-col justify-between hover:border-gold/30 transition duration-150 cursor-pointer group"
                 onClick={() => alert(`載入 ${idx.name} 指數細部追蹤數據`)}
               >
                 <div className="flex justify-between items-start">
-                  <span className="font-extrabold text-xs text-slate-800 tracking-tight group-hover:text-indigo-600 transition truncate">
+                  <span className="font-bold text-xs text-snow tracking-tight group-hover:text-gold transition truncate">
                     {idx.name}
                   </span>
-                  <span className="text-[9px] font-mono text-slate-400 font-medium">
+                  <span className="text-[9px] font-mono text-snow-muted font-medium">
                     {idx.code}
                   </span>
                 </div>
                 <div className="mt-2.5 flex items-baseline justify-between">
-                  <span className="font-mono text-sm font-extrabold text-[#111827]">
+                  <span className="font-mono text-sm font-bold text-snow">
                     {idx.price}
                   </span>
                   <span className={`text-[10.5px] font-bold px-1.5 py-0.5 rounded-md font-mono ${upColorClasses}`}>
@@ -211,29 +211,30 @@ export default function DailyFocus({ isTaiwanStyle }: DailyFocusProps) {
       </div>
 
       {/* 3. Industry News Navigation Grid */}
-      <div className="bg-white p-4 rounded-xl border border-slate-100 shadow-3xs space-y-4">
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 border-b border-slate-50 pb-3">
+      <div className="glass-card p-4 rounded-xl space-y-4">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 border-b border-white/[0.06] pb-3">
           <div className="flex items-center gap-2">
-            <div className="bg-indigo-50 text-indigo-600 p-1.5 rounded-lg">
+            <div className="bg-gold/15 text-gold p-1.5 rounded-lg">
               <Bell className="w-4 h-4" />
             </div>
             <div>
-              <h3 className="font-bold text-slate-800 text-sm">產業焦點導航</h3>
-              <p className="text-[10.5px] text-slate-400">快速掌握每日焦點題材及連結關係（排定更新：每日 12:00 台灣時間）</p>
+              <h3 className="font-satoshi font-medium text-snow text-sm">產業焦點導航</h3>
+              <p className="text-[10.5px] text-snow-muted">快速掌握每日焦點題材及連結關係（排定更新：每日 12:00 台灣時間）</p>
             </div>
           </div>
 
           {/* Date Selector Navigation */}
-          <div className="flex items-center gap-1 overflow-x-auto pb-1 max-w-full">
+          <div className="flex items-center gap-1 overflow-x-auto pb-1 max-w-full scrollbar-none">
             {datesList.map((dt) => (
               <button
                 key={dt}
                 onClick={() => setSelectedDate(dt)}
                 className={`text-[11px] font-medium px-2.5 py-1 rounded-lg shrink-0 transition ${
-                  selectedDate === dt 
-                    ? 'bg-indigo-600 text-white shadow-3xs' 
-                    : 'bg-slate-50 hover:bg-slate-100 text-slate-500'
+                  selectedDate === dt
+                    ? 'text-[#1a1205]'
+                    : 'bg-white/[0.05] hover:bg-white/[0.08] text-snow-muted'
                 }`}
+                style={selectedDate === dt ? { background: 'linear-gradient(180deg,#facc15,#f59e0b)' } : undefined}
               >
                 {dt}
               </button>
@@ -246,21 +247,22 @@ export default function DailyFocus({ isTaiwanStyle }: DailyFocusProps) {
           {focusNews.map((news) => {
             const isLocked = news.isPremium && !hasUpgraded;
             return (
-              <div 
-                key={news.id} 
+              <div
+                key={news.id}
                 className={`p-3.5 rounded-xl border transition duration-150 flex flex-col justify-between relative ${
-                  isLocked 
-                    ? 'bg-slate-50/50 border-slate-200/60 dark-blur' 
-                    : 'bg-white border-slate-100 hover:border-slate-300 hover:shadow-2xs'
+                  isLocked
+                    ? 'bg-white/[0.02] border-white/[0.06]'
+                    : 'bg-white/[0.03] border-white/[0.06] hover:border-gold/30'
                 }`}
               >
                 {isLocked && (
-                  <div className="absolute inset-0 bg-white/70 backdrop-blur-xs rounded-xl flex flex-col items-center justify-center p-4 text-center z-10">
-                    <Lock className="w-5 h-5 text-indigo-600 animate-bounce mb-1" />
-                    <span className="text-[10px] uppercase font-bold text-slate-500 block mb-0.5">Premium 限定</span>
-                    <button 
+                  <div className="absolute inset-0 bg-black/50 backdrop-blur-sm rounded-xl flex flex-col items-center justify-center p-4 text-center z-10">
+                    <Lock className="w-5 h-5 text-gold animate-bounce mb-1" />
+                    <span className="text-[10px] uppercase font-bold text-snow-2 block mb-0.5">Premium 限定</span>
+                    <button
                       onClick={() => setHasUpgraded(true)}
-                      className="text-[10px] bg-indigo-600 text-white font-bold px-3 py-1 rounded-md shadow-3xs hover:bg-indigo-700 transition"
+                      className="text-[10px] text-[#1a1205] font-bold px-3 py-1 rounded-md transition"
+                      style={{ background: 'linear-gradient(180deg,#facc15,#f59e0b)' }}
                     >
                       立即解鎖
                     </button>
@@ -269,26 +271,26 @@ export default function DailyFocus({ isTaiwanStyle }: DailyFocusProps) {
 
                 <div className="space-y-2">
                   <div className="flex justify-between items-center">
-                    <span className="text-[10px] bg-slate-100 text-slate-600 font-bold px-2 py-0.5 rounded-md">
+                    <span className="text-[10px] bg-white/[0.06] text-snow-2 font-bold px-2 py-0.5 rounded-md">
                       {news.source}
                     </span>
-                    <span className="text-[10px] text-slate-400 font-mono flex items-center gap-0.5">
+                    <span className="text-[10px] text-snow-muted font-mono flex items-center gap-0.5">
                       <Calendar className="w-3 h-3" />
                       {news.date}
                     </span>
                   </div>
 
-                  <h4 className="font-extrabold text-xs text-slate-800 leading-snug hover:text-indigo-600 cursor-pointer">
+                  <h4 className="font-bold text-xs text-snow leading-snug hover:text-gold cursor-pointer">
                     {news.title}
                   </h4>
-                  <p className="text-[11px] text-slate-500 leading-normal line-clamp-3">
+                  <p className="text-[11px] text-snow-muted leading-normal line-clamp-3">
                     {news.content}
                   </p>
                 </div>
 
-                <div className="mt-3 pt-3 border-t border-slate-50 flex flex-wrap gap-1">
+                <div className="mt-3 pt-3 border-t border-white/[0.06] flex flex-wrap gap-1">
                   {news.tags.map((tag) => (
-                    <span key={tag} className="text-[9.5px] bg-indigo-50/50 text-indigo-600 px-1.5 py-0.5 rounded leading-none font-medium">
+                    <span key={tag} className="text-[9.5px] bg-gold/10 text-amber-200/90 px-1.5 py-0.5 rounded leading-none font-medium">
                       {tag}
                     </span>
                   ))}
@@ -302,32 +304,32 @@ export default function DailyFocus({ isTaiwanStyle }: DailyFocusProps) {
       {/* 4. Three Big Institutional Force (三大法人) and Margin stats (資券變化) */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* Left Column: 三大法人 */}
-        <div className="bg-white p-4 rounded-xl border border-slate-100 shadow-3xs space-y-3">
-          <div className="flex justify-between items-center border-b border-slate-50 pb-2">
-            <h3 className="font-bold text-slate-800 text-xs flex items-center gap-1.5">
-              <Activity className="w-4 h-4 text-indigo-600" />
+        <div className="glass-card p-4 rounded-xl space-y-3">
+          <div className="flex justify-between items-center border-b border-white/[0.06] pb-2">
+            <h3 className="font-satoshi font-medium text-snow text-xs flex items-center gap-1.5">
+              <Activity className="w-4 h-4 text-gold" />
               <span>三大法人進出概觀</span>
             </h3>
-            <span className="text-[10px] font-mono text-slate-400 bg-slate-50 px-2 py-0.5 rounded">2026-05-19</span>
+            <span className="text-[10px] font-mono text-snow-muted bg-white/[0.05] px-2 py-0.5 rounded">2026-05-19</span>
           </div>
 
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse">
               <thead>
-                <tr className="border-b border-slate-100">
-                  <th className="py-2 text-[10px] font-extrabold text-slate-400 uppercase">法人名稱</th>
-                  <th className="py-2 text-[10px] font-extrabold text-slate-400 uppercase text-right">買進金額</th>
-                  <th className="py-2 text-[10px] font-extrabold text-slate-400 uppercase text-right">賣出金額</th>
-                  <th className="py-2 text-[10px] font-extrabold text-slate-400 uppercase text-right">買賣超</th>
+                <tr className="border-b border-white/10">
+                  <th className="py-2 text-[10px] font-bold text-snow-muted uppercase">法人名稱</th>
+                  <th className="py-2 text-[10px] font-bold text-snow-muted uppercase text-right">買進金額</th>
+                  <th className="py-2 text-[10px] font-bold text-snow-muted uppercase text-right">賣出金額</th>
+                  <th className="py-2 text-[10px] font-bold text-snow-muted uppercase text-right">買賣超</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-50 text-xs">
+              <tbody className="divide-y divide-white/[0.06] text-xs">
                 {institutionalFlows.map((flow, index) => (
-                  <tr key={index} className="hover:bg-slate-50/50">
-                    <td className="py-2.5 font-bold text-slate-700">{flow.name}</td>
-                    <td className="py-2.5 text-right font-mono text-slate-600">{flow.buy}</td>
-                    <td className="py-2.5 text-right font-mono text-slate-600">{flow.sell}</td>
-                    <td className={`py-2.5 text-right font-mono font-extrabold ${getNetColor(flow.isPositive)}`}>
+                  <tr key={index} className="hover:bg-white/[0.03]">
+                    <td className="py-2.5 font-bold text-snow-2">{flow.name}</td>
+                    <td className="py-2.5 text-right font-mono text-snow-muted">{flow.buy}</td>
+                    <td className="py-2.5 text-right font-mono text-snow-muted">{flow.sell}</td>
+                    <td className={`py-2.5 text-right font-mono font-bold ${getNetColor(flow.isPositive)}`}>
                       {flow.net}
                     </td>
                   </tr>
@@ -338,32 +340,32 @@ export default function DailyFocus({ isTaiwanStyle }: DailyFocusProps) {
         </div>
 
         {/* Right Column: 資券變化 */}
-        <div className="bg-white p-4 rounded-xl border border-slate-100 shadow-3xs space-y-3">
-          <div className="flex justify-between items-center border-b border-slate-50 pb-2">
-            <h3 className="font-bold text-slate-800 text-xs flex items-center gap-1.5">
-              <DollarSign className="w-4 h-4 text-indigo-600" />
+        <div className="glass-card p-4 rounded-xl space-y-3">
+          <div className="flex justify-between items-center border-b border-white/[0.06] pb-2">
+            <h3 className="font-satoshi font-medium text-snow text-xs flex items-center gap-1.5">
+              <DollarSign className="w-4 h-4 text-gold" />
               <span>信用交易餘額與籌碼變化</span>
             </h3>
-            <span className="text-[10px] font-mono text-slate-400 bg-slate-50 px-2 py-0.5 rounded">2026-05-19</span>
+            <span className="text-[10px] font-mono text-snow-muted bg-white/[0.05] px-2 py-0.5 rounded">2026-05-19</span>
           </div>
 
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse">
               <thead>
-                <tr className="border-b border-slate-100">
-                  <th className="py-2 text-[10px] font-extrabold text-slate-400 uppercase">指標項目</th>
-                  <th className="py-2 text-[10px] font-extrabold text-slate-400 uppercase text-right">融資/買入</th>
-                  <th className="py-2 text-[10px] font-extrabold text-slate-400 uppercase text-right">融券/賣出</th>
-                  <th className="py-2 text-[10px] font-extrabold text-slate-400 uppercase text-right">增減變動</th>
+                <tr className="border-b border-white/10">
+                  <th className="py-2 text-[10px] font-bold text-snow-muted uppercase">指標項目</th>
+                  <th className="py-2 text-[10px] font-bold text-snow-muted uppercase text-right">融資/買入</th>
+                  <th className="py-2 text-[10px] font-bold text-snow-muted uppercase text-right">融券/賣出</th>
+                  <th className="py-2 text-[10px] font-bold text-snow-muted uppercase text-right">增減變動</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-50 text-xs">
+              <tbody className="divide-y divide-white/[0.06] text-xs">
                 {marginStats.map((stat, index) => (
-                  <tr key={index} className="hover:bg-slate-50/50">
-                    <td className="py-2.5 font-bold text-slate-700">{stat.name}</td>
-                    <td className="py-2.5 text-right font-mono text-slate-600">{stat.buy}</td>
-                    <td className="py-2.5 text-right font-mono text-slate-600">{stat.sell}</td>
-                    <td className={`py-2.5 text-right font-mono font-extrabold ${getNetColor(stat.isPositive)}`}>
+                  <tr key={index} className="hover:bg-white/[0.03]">
+                    <td className="py-2.5 font-bold text-snow-2">{stat.name}</td>
+                    <td className="py-2.5 text-right font-mono text-snow-muted">{stat.buy}</td>
+                    <td className="py-2.5 text-right font-mono text-snow-muted">{stat.sell}</td>
+                    <td className={`py-2.5 text-right font-mono font-bold ${getNetColor(stat.isPositive)}`}>
                       {stat.change}
                     </td>
                   </tr>
@@ -377,94 +379,95 @@ export default function DailyFocus({ isTaiwanStyle }: DailyFocusProps) {
       {/* 5. Active ETF tracking & Buying/Selling Statistics */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* Left Grid: Active ETFs tracker */}
-        <div className="bg-white p-4 rounded-xl border border-slate-100 shadow-3xs space-y-3">
-          <div className="flex justify-between items-center border-b border-slate-50 pb-2">
+        <div className="glass-card p-4 rounded-xl space-y-3">
+          <div className="flex justify-between items-center border-b border-white/[0.06] pb-2">
             <div>
-              <h3 className="font-bold text-slate-800 text-xs flex items-center gap-1.5">
-                <Activity className="w-4 h-4 text-pink-500" />
+              <h3 className="font-satoshi font-medium text-snow text-xs flex items-center gap-1.5">
+                <Activity className="w-4 h-4 text-gold" />
                 <span>主動型 ETF 持股變動追蹤</span>
               </h3>
-              <p className="text-[10px] text-slate-400">觀察高資產大額資金主動調度之風向</p>
+              <p className="text-[10px] text-snow-muted">觀察高資產大額資金主動調度之風向</p>
             </div>
-            <span className="text-[9.5px] font-mono text-indigo-600 bg-indigo-50/80 px-2.5 py-1 rounded-md font-bold">每日持股變動</span>
+            <span className="text-[9.5px] font-mono text-gold bg-gold/10 px-2.5 py-1 rounded-md font-bold">每日持股變動</span>
           </div>
 
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse">
               <thead>
-                <tr className="border-b border-slate-100">
-                  <th className="py-2 text-[9.5px] font-extrabold text-slate-400 uppercase">ETF 名稱</th>
-                  <th className="py-2 text-[9.5px] font-extrabold text-[#F59E0B] uppercase text-right">新增</th>
-                  <th className="py-2 text-[9.5px] font-extrabold text-red-500 uppercase text-right">加碼</th>
-                  <th className="py-2 text-[9.5px] font-extrabold text-emerald-500 uppercase text-right">減碼</th>
-                  <th className="py-2 text-[9.5px] font-extrabold text-slate-500 uppercase text-right">移出</th>
+                <tr className="border-b border-white/10">
+                  <th className="py-2 text-[9.5px] font-bold text-snow-muted uppercase">ETF 名稱</th>
+                  <th className="py-2 text-[9.5px] font-bold text-gold uppercase text-right">新增</th>
+                  <th className="py-2 text-[9.5px] font-bold text-red-400 uppercase text-right">加碼</th>
+                  <th className="py-2 text-[9.5px] font-bold text-emerald-400 uppercase text-right">減碼</th>
+                  <th className="py-2 text-[9.5px] font-bold text-snow-muted uppercase text-right">移出</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-50 text-xs">
+              <tbody className="divide-y divide-white/[0.06] text-xs">
                 {activeETFs.map((etf, index) => (
-                  <tr key={index} className="hover:bg-slate-50/50">
-                    <td className="py-2 font-bold text-slate-700 truncate max-w-[12rem]">{etf.name}</td>
-                    <td className="py-2 text-right font-mono text-slate-400">{etf.add}</td>
-                    <td className="py-2 text-right font-mono text-red-500 font-semibold">{etf.buy}</td>
-                    <td className="py-2 text-right font-mono text-emerald-500 font-semibold">{etf.sell}</td>
-                    <td className="py-2 text-right font-mono text-slate-500">{etf.remove}</td>
+                  <tr key={index} className="hover:bg-white/[0.03]">
+                    <td className="py-2 font-bold text-snow-2 truncate max-w-[12rem]">{etf.name}</td>
+                    <td className="py-2 text-right font-mono text-snow-muted">{etf.add}</td>
+                    <td className="py-2 text-right font-mono text-red-400 font-semibold">{etf.buy}</td>
+                    <td className="py-2 text-right font-mono text-emerald-400 font-semibold">{etf.sell}</td>
+                    <td className="py-2 text-right font-mono text-snow-muted">{etf.remove}</td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
-          <div className="text-[9.5px] text-slate-400 border-t border-slate-50 pt-2 flex justify-between">
+          <div className="text-[9.5px] text-snow-muted border-t border-white/[0.06] pt-2 flex justify-between">
             <span>排定更新：每日 18:00 (台灣時間)</span>
             <span>最新資料：2026-05-21</span>
           </div>
         </div>
 
         {/* Right Grid: Active Buy/Sell Stats */}
-        <div className="bg-white p-4 rounded-xl border border-slate-100 shadow-3xs space-y-3">
-          <div className="flex justify-between items-center border-b border-slate-50 pb-2">
+        <div className="glass-card p-4 rounded-xl space-y-3">
+          <div className="flex justify-between items-center border-b border-white/[0.06] pb-2">
             <div>
-              <h3 className="font-bold text-slate-800 text-xs">主動買賣超個股統計</h3>
-              <p className="text-[10px] text-slate-400">經主動式 ETF 整合持股之跨基金統計</p>
+              <h3 className="font-satoshi font-medium text-snow text-xs">主動買賣超個股統計</h3>
+              <p className="text-[10px] text-snow-muted">經主動式 ETF 整合持股之跨基金統計</p>
             </div>
-            <span className="text-[10px] font-mono text-slate-400 bg-slate-100 px-2 py-0.5 rounded font-bold">跨ETF整合</span>
+            <span className="text-[10px] font-mono text-snow-muted bg-white/[0.05] px-2 py-0.5 rounded font-bold">跨ETF整合</span>
           </div>
 
           <div className="flex justify-between items-center">
             {/* Buy / Sell Tabs */}
-            <div className="flex bg-slate-50 p-1 rounded-lg">
+            <div className="flex bg-white/[0.05] p-1 rounded-lg">
               <button
                 onClick={() => setBuySellTab('buy')}
                 className={`text-[10.5px] px-3 py-1 font-bold rounded-md transition ${
-                  buySellTab === 'buy' 
-                    ? 'bg-red-500 text-white shadow-2xs' 
-                    : 'text-slate-500 hover:text-slate-700'
+                  buySellTab === 'buy'
+                    ? 'bg-down text-white'
+                    : 'text-snow-muted hover:text-snow-2'
                 }`}
               >
-                🔴 買進區 <span className="font-mono text-[9px] bg-red-600/30 px-1 rounded ml-0.5">101</span>
+                🔴 買進區 <span className="font-mono text-[9px] bg-black/25 px-1 rounded ml-0.5">101</span>
               </button>
               <button
                 onClick={() => setBuySellTab('sell')}
                 className={`text-[10.5px] px-3 py-1 font-bold rounded-md transition ${
-                  buySellTab === 'sell' 
-                    ? 'bg-emerald-500 text-white shadow-2xs' 
-                    : 'text-slate-500 hover:text-slate-700'
+                  buySellTab === 'sell'
+                    ? 'bg-up text-white'
+                    : 'text-snow-muted hover:text-snow-2'
                 }`}
               >
-                🟢 賣出區 <span className="font-mono text-[9px] bg-emerald-600/30 px-1 rounded ml-0.5">69</span>
+                🟢 賣出區 <span className="font-mono text-[9px] bg-black/25 px-1 rounded ml-0.5">69</span>
               </button>
             </div>
 
             {/* Duration Filters */}
-            <div className="flex gap-1 border border-slate-100 rounded-lg p-0.5 bg-slate-50/50">
+            <div className="flex gap-1 border border-white/[0.08] rounded-lg p-0.5 bg-white/[0.04]">
               {(['day', 'week', 'month'] as const).map((dur) => (
                 <button
                   key={dur}
                   onClick={() => setBuySellDuration(dur)}
-                  className={`text-[10px] font-bold px-2 py-0.5 rounded ${
-                    buySellDuration === dur 
-                      ? 'bg-indigo-600 text-white' 
-                      : 'text-slate-500'
+                  className={`text-[10px] font-bold px-2 py-0.5 rounded transition ${
+                    buySellDuration === dur
+                      ? 'text-[#1a1205]'
+                      : 'text-snow-muted'
                   }`}
+                  style={buySellDuration === dur ? { background: 'linear-gradient(180deg,#facc15,#f59e0b)' } : undefined}
                 >
                   {dur === 'day' ? '日' : dur === 'week' ? '週' : '月'}
                 </button>
@@ -475,17 +478,17 @@ export default function DailyFocus({ isTaiwanStyle }: DailyFocusProps) {
           {/* Table display */}
           <div className="space-y-2 max-h-[12.5rem] overflow-y-auto">
             {(buySellTab === 'buy' ? activeBuyList : activeSellList).map((stock, index) => (
-              <div 
-                key={index} 
-                className="p-2.5 bg-slate-50/40 hover:bg-slate-50 rounded-xl flex justify-between items-center transition cursor-pointer"
+              <div
+                key={index}
+                className="p-2.5 bg-white/[0.03] hover:bg-white/[0.06] rounded-xl flex justify-between items-center transition cursor-pointer"
                 onClick={() => alert(`載入 ${stock.name} (${stock.code}) 主動買賣超詳情`)}
               >
                 <div className="flex items-center gap-2">
-                  <span className="text-[10.5px] font-bold text-slate-800">{stock.name}</span>
-                  <span className="text-[9.5px] font-mono text-slate-400">{stock.code}</span>
+                  <span className="text-[10.5px] font-bold text-snow">{stock.name}</span>
+                  <span className="text-[9.5px] font-mono text-snow-muted">{stock.code}</span>
                   <div className="flex gap-0.5">
                     {stock.etfs.map(etf => (
-                      <span key={etf} className="text-[8.5px] bg-[#EEF2F6] text-slate-600 font-mono px-1 rounded border border-slate-200/50 leading-none py-0.5 scale-95">
+                      <span key={etf} className="text-[8.5px] bg-white/[0.06] text-snow-2 font-mono px-1 rounded border border-white/[0.06] leading-none py-0.5 scale-95">
                         {etf}
                       </span>
                     ))}
@@ -495,7 +498,7 @@ export default function DailyFocus({ isTaiwanStyle }: DailyFocusProps) {
                   <span className={`text-[10.5px] font-bold mr-2 ${getNetColor(buySellTab === 'buy')}`}>
                     {stock.counts}
                   </span>
-                  <span className="text-[10.5px] font-mono text-slate-500 bg-slate-100/80 px-1.5 py-0.5 rounded">
+                  <span className="text-[10.5px] font-mono text-snow-2 bg-white/[0.06] px-1.5 py-0.5 rounded">
                     {stock.change}
                   </span>
                 </div>
@@ -506,27 +509,28 @@ export default function DailyFocus({ isTaiwanStyle }: DailyFocusProps) {
       </div>
 
       {/* 6. Major Announcements Station (重大資訊觀測站)  */}
-      <div className="bg-white p-4 rounded-xl border border-slate-100 shadow-3xs space-y-4">
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 border-b border-slate-50 pb-3">
+      <div className="glass-card p-4 rounded-xl space-y-4">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 border-b border-white/[0.06] pb-3">
           <div className="flex items-center gap-2">
             <span className="text-lg">📋</span>
             <div>
-              <h3 className="font-bold text-slate-800 text-sm flex items-center gap-1">
+              <h3 className="font-satoshi font-medium text-snow text-sm flex items-center gap-1">
                 <span>重大資訊觀測站公告</span>
-                <span className="text-[9px] bg-amber-500/10 text-amber-600 font-extrabold px-1.5 rounded uppercase font-mono tracking-wider">PREVIEW</span>
+                <span className="text-[9px] bg-gold/15 text-gold font-bold px-1.5 rounded uppercase font-mono tracking-wider">PREVIEW</span>
               </h3>
-              <p className="text-[10.5px] text-slate-400">證交所即時公告、上市公司重大訊息過濾（整合 ESG 與股常決議）</p>
+              <p className="text-[10.5px] text-snow-muted">證交所即時公告、上市公司重大訊息過濾（整合 ESG 與股常決議）</p>
             </div>
           </div>
 
-          <div className="flex gap-1 overflow-x-auto pb-1 max-w-full">
+          <div className="flex gap-1 overflow-x-auto pb-1 max-w-full scrollbar-none">
             {mopDatesList.slice(0, 4).map((d) => (
               <button
                 key={d}
                 onClick={() => setMopDate(d)}
-                className={`text-[10 px] font-bold px-2.5 py-1 rounded-lg shrink-0 transition ${
-                  mopDate === d ? 'bg-indigo-600 text-white' : 'bg-slate-50 text-slate-500 hover:bg-slate-100'
+                className={`text-[10px] font-bold px-2.5 py-1 rounded-lg shrink-0 transition ${
+                  mopDate === d ? 'text-[#1a1205]' : 'bg-white/[0.05] text-snow-muted hover:bg-white/[0.08]'
                 }`}
+                style={mopDate === d ? { background: 'linear-gradient(180deg,#facc15,#f59e0b)' } : undefined}
               >
                 {d}
               </button>
@@ -535,82 +539,83 @@ export default function DailyFocus({ isTaiwanStyle }: DailyFocusProps) {
         </div>
 
         {/* Categories filters for announcements */}
-        <div className="flex items-center gap-1.5 overflow-x-auto pb-1 text-[11px] font-medium">
-          <button 
-            onClick={() => setMopTab('all')} 
-            className={`px-3 py-1 rounded-full transition ${mopTab === 'all' ? 'bg-indigo-100 text-indigo-800' : 'bg-slate-50 text-slate-500 hover:bg-slate-100'}`}
+        <div className="flex items-center gap-1.5 overflow-x-auto pb-1 text-[11px] font-medium scrollbar-none">
+          <button
+            onClick={() => setMopTab('all')}
+            className={`px-3 py-1 rounded-full transition ${mopTab === 'all' ? 'bg-gold/15 text-gold border border-gold/30' : 'bg-white/[0.05] text-snow-muted hover:bg-white/[0.08]'}`}
           >
-            全部 <span className="text-[9.5px] font-bold bg-slate-200/50 text-slate-600 px-1 rounded ml-0.5">3</span>
+            全部 <span className="text-[9.5px] font-bold bg-white/10 text-snow-2 px-1 rounded ml-0.5">3</span>
           </button>
-          <button 
-            onClick={() => setMopTab('clarify')} 
-            className={`px-3 py-1 rounded-full transition ${mopTab === 'clarify' ? 'bg-blue-100 text-blue-800' : 'bg-slate-50 text-slate-500 hover:bg-slate-100'}`}
+          <button
+            onClick={() => setMopTab('clarify')}
+            className={`px-3 py-1 rounded-full transition ${mopTab === 'clarify' ? 'bg-blue-500/15 text-blue-300 border border-blue-400/30' : 'bg-white/[0.05] text-snow-muted hover:bg-white/[0.08]'}`}
           >
             澄清回應
           </button>
-          <button 
-            onClick={() => setMopTab('financial')} 
-            className={`px-3 py-1 rounded-full transition ${mopTab === 'financial' ? 'bg-emerald-100 text-emerald-800' : 'bg-slate-50 text-slate-500 hover:bg-slate-100'}`}
+          <button
+            onClick={() => setMopTab('financial')}
+            className={`px-3 py-1 rounded-full transition ${mopTab === 'financial' ? 'bg-up/15 text-emerald-300 border border-up/30' : 'bg-white/[0.05] text-snow-muted hover:bg-white/[0.08]'}`}
           >
             財務數據
           </button>
-          <button 
-            onClick={() => setMopTab('governance')} 
-            className={`px-3 py-1 rounded-full transition ${mopTab === 'governance' ? 'bg-purple-100 text-purple-800' : 'bg-slate-50 text-slate-500 hover:bg-slate-100'}`}
+          <button
+            onClick={() => setMopTab('governance')}
+            className={`px-3 py-1 rounded-full transition ${mopTab === 'governance' ? 'bg-purple-500/15 text-purple-300 border border-purple-400/30' : 'bg-white/[0.05] text-snow-muted hover:bg-white/[0.08]'}`}
           >
-            公司治理 <span className="text-[9.5px] font-bold bg-purple-200/50 text-purple-700 px-1 rounded ml-1">1</span>
+            公司治理 <span className="text-[9.5px] font-bold bg-white/10 text-snow-2 px-1 rounded ml-1">1</span>
           </button>
-          <button 
-            onClick={() => setMopTab('event')} 
-            className={`px-3 py-1 rounded-full transition ${mopTab === 'event' ? 'bg-red-100 text-red-800' : 'bg-slate-50 text-slate-500 hover:bg-slate-100'}`}
+          <button
+            onClick={() => setMopTab('event')}
+            className={`px-3 py-1 rounded-full transition ${mopTab === 'event' ? 'bg-down/15 text-red-300 border border-down/30' : 'bg-white/[0.05] text-snow-muted hover:bg-white/[0.08]'}`}
           >
-            重大事件 <span className="text-[9.5px] font-bold bg-red-200/50 text-red-700 px-1 rounded ml-1">2</span>
+            重大事件 <span className="text-[9.5px] font-bold bg-white/10 text-snow-2 px-1 rounded ml-1">2</span>
           </button>
         </div>
 
         {/* Announcements list */}
         <div className="space-y-2 relative">
           {filteredMops.slice(0, 3).map((ann) => (
-            <div 
-              key={ann.id} 
-              className="p-3 bg-slate-50/30 border border-slate-100 hover:border-slate-200 rounded-xl flex flex-col md:flex-row justify-between gap-2.5 transition cursor-pointer"
+            <div
+              key={ann.id}
+              className="p-3 bg-white/[0.03] border border-white/[0.06] hover:border-gold/30 rounded-xl flex flex-col md:flex-row justify-between gap-2.5 transition cursor-pointer"
               onClick={() => alert(`【觀測站訊息詳閱】\n公司：${ann.company}\n時間：${ann.time}\n主旨：${ann.title}`)}
             >
               <div className="space-y-1">
                 <div className="flex items-center gap-2 flex-wrap">
                   <span className={`text-[9px] font-bold px-1.5 py-0.5 rounded leading-none ${
-                    ann.type === 'governance' ? 'bg-purple-50 text-purple-600' :
-                    ann.type === 'event' ? 'bg-red-50 text-red-600' :
-                    ann.type === 'clarify' ? 'bg-blue-50 text-blue-600' : 'bg-emerald-50 text-emerald-600'
+                    ann.type === 'governance' ? 'bg-purple-500/15 text-purple-300' :
+                    ann.type === 'event' ? 'bg-down/15 text-red-300' :
+                    ann.type === 'clarify' ? 'bg-blue-500/15 text-blue-300' : 'bg-up/15 text-emerald-300'
                   }`}>
                     {ann.badge}
                   </span>
-                  <span className="text-[10.5px] font-bold text-slate-800">{ann.title}</span>
+                  <span className="text-[10.5px] font-bold text-snow">{ann.title}</span>
                 </div>
-                <p className="text-[10.5px] font-mono text-slate-400">
-                  上市代號及公司：<span className="text-slate-600 font-sans font-semibold">{ann.company}</span>
+                <p className="text-[10.5px] font-mono text-snow-muted">
+                  上市代號及公司：<span className="text-snow-2 font-sans font-semibold">{ann.company}</span>
                 </p>
               </div>
-              <span className="text-[10px] text-slate-400 font-mono shrink-0 md:self-center bg-[#F1F3F5] px-2 py-0.5 rounded border border-slate-200/40">
+              <span className="text-[10px] text-snow-muted font-mono shrink-0 md:self-center bg-white/[0.05] px-2 py-0.5 rounded border border-white/[0.06]">
                 {ann.time}
               </span>
             </div>
           ))}
 
-          {/* Premium Watermark matching Image 6 */}
-          <div className="bg-[#FFEFE7] border border-[#FFD0B3] p-4 rounded-xl flex flex-col md:flex-row justify-between items-center gap-3 mt-4">
+          {/* Premium Watermark */}
+          <div className="bg-gold/[0.08] border border-gold/25 p-4 rounded-xl flex flex-col md:flex-row justify-between items-center gap-3 mt-4">
             <div className="flex items-center gap-3">
-              <div className="p-2 bg-[#FF7A30] text-white rounded-xl">
+              <div className="p-2 text-[#1a1205] rounded-xl" style={{ background: 'linear-gradient(180deg,#facc15,#f59e0b)' }}>
                 <Coffee className="w-5 h-5" />
               </div>
               <div>
-                <span className="text-xs font-bold text-[#FF5500] block">解鎖專業股市大情報</span>
-                <p className="text-[11px] text-[#6A300F] leading-snug">一個月一杯咖啡支持作者，即可解鎖完整 MOPS 重大公告以及 ESG 深度數據！</p>
+                <span className="text-xs font-bold text-gold block">解鎖專業股市大情報</span>
+                <p className="text-[11px] text-amber-200/80 leading-snug">一個月一杯咖啡支持作者，即可解鎖完整 MOPS 重大公告以及 ESG 深度數據！</p>
               </div>
             </div>
-            <button 
-              onClick={() => alert('感謝支持！已模擬解鎖，並自動載入全站數據。')} 
-              className="bg-[#FF5500] hover:bg-[#D93B00] text-white px-4 py-2 text-xs font-extrabold rounded-xl shadow-md transition shrink-0"
+            <button
+              onClick={() => alert('感謝支持！已模擬解鎖，並自動載入全站數據。')}
+              className="text-[#1a1205] px-4 py-2 text-xs font-bold rounded-xl transition shrink-0 hover:brightness-110"
+              style={{ background: 'linear-gradient(180deg,#facc15,#f59e0b)' }}
             >
               立即升級
             </button>

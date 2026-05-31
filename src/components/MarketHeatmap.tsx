@@ -1,183 +1,220 @@
-import React, { useState } from 'react';
-import { Layers, Activity, Calendar, HelpCircle, ArrowUpRight } from 'lucide-react';
-
-interface HeatmapStock {
-  name: string;
-  code: string;
-  weight: number; // For box sizing simulation
-  returns: {
-    day: number;
-    week: number;
-    month: number;
-  };
-  sector: string;
-}
+import React, { useMemo, useState } from 'react';
+import ReactECharts from 'echarts-for-react';
+import { Activity, Grid3X3 } from 'lucide-react';
+import {
+  HEATMAP_MARKETS,
+  HeatmapMarket,
+  HeatmapPeriod,
+} from '../data/heatmapData';
 
 interface MarketHeatmapProps {
   isTaiwanStyle: boolean;
 }
 
+type Dimension = 'sector' | 'stock';
+
+interface TreeNode {
+  name: string;
+  code?: string;
+  value: number;          // 面積 = 相對市值
+  changePercent: number;  // 顏色 = 漲跌幅
+  sector?: string;
+  count?: number;
+}
+
+// 顏色：依台股 / 國際配色決定漲跌色，深淺依漲跌幅強度
+function tileColor(change: number, isTaiwanStyle: boolean): string {
+  if (!change) return 'rgba(120,120,130,0.35)';
+  const RED = '247, 66, 75';   // tradytics --text-warning
+  const GREEN = '106, 206, 98'; // tradytics --text-success
+  const up = change > 0;
+  const rgb = up
+    ? (isTaiwanStyle ? RED : GREEN)
+    : (isTaiwanStyle ? GREEN : RED);
+  const intensity = Math.min(Math.abs(change) / 8, 1);
+  return `rgba(${rgb}, ${0.32 + intensity * 0.6})`;
+}
+
+const fmtPct = (v: number) => `${v > 0 ? '+' : ''}${v.toFixed(2)}%`;
+
+const PERIODS: { key: HeatmapPeriod; label: string }[] = [
+  { key: 'day', label: '單日' },
+  { key: 'week', label: '單週' },
+  { key: 'month', label: '單月' },
+];
+
+const DIMENSIONS: { key: Dimension; label: string }[] = [
+  { key: 'sector', label: '產業' },
+  { key: 'stock', label: '個股' },
+];
+
 export default function MarketHeatmap({ isTaiwanStyle }: MarketHeatmapProps) {
-  const [duration, setDuration] = useState<'day' | 'week' | 'month'>('day');
-  const [selectedSec, setSelectedSec] = useState<string>('全部');
+  const [market, setMarket] = useState<HeatmapMarket>('tw');
+  const [period, setPeriod] = useState<HeatmapPeriod>('day');
+  const [dimension, setDimension] = useState<Dimension>('sector');
 
-  // Hardcoded real high-fidelity Taiwan Tech stock list
-  const stockList: HeatmapStock[] = [
-    { name: '台積電', code: '2330', weight: 40, returns: { day: 1.5, week: 3.2, month: 8.5 }, sector: '晶圓代工' },
-    { name: '聯發科', code: '2454', weight: 15, returns: { day: 0.8, week: -1.2, month: 5.4 }, sector: 'IC設計' },
-    { name: '鴻海', code: '2317', weight: 12, returns: { day: 2.1, week: 4.8, month: 11.2 }, sector: 'AI 伺服器' },
-    { name: '廣達', code: '2382', weight: 8, returns: { day: -1.2, week: 2.5, month: -1.4 }, sector: 'AI 伺服器' },
-    { name: '欣興', code: '3037', weight: 6, returns: { day: -2.3, week: -4.1, month: 2.8 }, sector: '載板PCB' },
-    { name: '世芯-KY', code: '3661', weight: 5, returns: { day: 3.5, week: 8.1, month: 14.5 }, sector: 'IC設計' },
-    { name: '創意', code: '3443', weight: 5, returns: { day: 2.8, week: 5.2, month: 12.0 }, sector: 'IC設計' },
-    { name: '奇鋐', code: '3017', weight: 4, returns: { day: 4.1, week: 6.8, month: 18.2 }, sector: '液冷散熱' },
-    { name: '雙鴻', code: '3324', weight: 4, returns: { day: 3.2, week: 5.5, month: 15.1 }, sector: '液冷散熱' },
-    { name: '勤誠', code: '8210', weight: 3, returns: { day: 1.8, week: -0.5, month: 6.9 }, sector: 'AI 伺服器' },
-    { name: '力旺', code: '3529', weight: 3, returns: { day: -0.5, week: 3.1, month: 9.3 }, sector: 'IC設計' },
-    { name: '聯亞', code: '3081', weight: 2, returns: { day: 5.5, week: 12.4, month: 28.5 }, sector: '矽光子' },
-    { name: '光聖', code: '6442', weight: 2, returns: { day: -1.8, week: 4.0, month: 22.1 }, sector: '矽光子' },
-  ];
+  const nodes = useMemo<TreeNode[]>(() => {
+    const stocks = HEATMAP_MARKETS[market].stocks;
+    const change = (s: typeof stocks[number]) => s.returns[period];
 
-  const valueExtractor = (st: HeatmapStock) => {
-    if (duration === 'day') return st.returns.day;
-    if (duration === 'week') return st.returns.week;
-    return st.returns.month;
-  };
-
-  const getHeatColorAndText = (val: number) => {
-    const absVal = Math.abs(val);
-    const intensity = Math.min(Math.floor(absVal * 15) + 30, 95); // Scale percentage brightness
-    
-    // Choose colors base on isTaiwanStyle (Taiwan style: Red up, Green down. International: Green up, Red down)
-    if (isTaiwanStyle) {
-      if (val > 0) {
-        return {
-          bg: `rgba(220, 38, 38, ${intensity / 100})`, // Red scale
-          text: 'text-white'
-        };
-      } else if (val < 0) {
-        return {
-          bg: `rgba(16, 185, 129, ${intensity / 100})`, // Green scale
-          text: 'text-white'
-        };
-      } else {
-        return { bg: '#F1F3F5', text: 'text-slate-600' };
-      }
-    } else {
-      if (val > 0) {
-        return {
-          bg: `rgba(16, 185, 129, ${intensity / 100})`, // Green scale
-          text: 'text-white'
-        };
-      } else if (val < 0) {
-        return {
-          bg: `rgba(220, 38, 38, ${intensity / 100})`, // Red scale
-          text: 'text-white'
-        };
-      } else {
-        return { bg: '#F1F3F5', text: 'text-slate-600' };
-      }
+    if (dimension === 'stock') {
+      return stocks.map((s) => ({
+        name: s.name,
+        code: s.code,
+        value: s.marketCap,
+        changePercent: change(s),
+        sector: s.sector,
+      }));
     }
-  };
 
-  const sectors = ['全部', '晶圓代工', 'IC設計', 'AI 伺服器', '液冷散熱', '矽光子'];
+    // 依產業聚合：面積=市值加總，漲跌幅=市值加權平均
+    const agg = new Map<string, { cap: number; weighted: number; count: number }>();
+    for (const s of stocks) {
+      const e = agg.get(s.sector) ?? { cap: 0, weighted: 0, count: 0 };
+      e.cap += s.marketCap;
+      e.weighted += change(s) * s.marketCap;
+      e.count += 1;
+      agg.set(s.sector, e);
+    }
+    return [...agg.entries()]
+      .map(([sector, e]) => ({
+        name: sector,
+        value: e.cap,
+        changePercent: e.weighted / e.cap,
+        count: e.count,
+      }))
+      .sort((a, b) => b.value - a.value);
+  }, [market, period, dimension]);
 
-  const filteredStocks = stockList.filter(s => {
-    if (selectedSec === '全部') return true;
-    return s.sector === selectedSec;
-  });
+  const option = useMemo(() => {
+    const data = nodes.map((n) => ({
+      ...n,
+      itemStyle: { color: tileColor(n.changePercent, isTaiwanStyle) },
+    }));
+
+    return {
+      backgroundColor: 'transparent',
+      tooltip: {
+        backgroundColor: 'rgba(12,12,14,0.96)',
+        borderColor: '#2a2a2e',
+        borderWidth: 1,
+        padding: [10, 14],
+        textStyle: { color: '#e6e6e6', fontSize: 12 },
+        extraCssText: 'box-shadow: 0 8px 24px rgba(0,0,0,0.5); border-radius: 8px;',
+        formatter: (p: { data: TreeNode }) => {
+          const d = p.data;
+          if (!d || !d.name) return '';
+          const up = d.changePercent > 0;
+          const c = up ? (isTaiwanStyle ? '#f7424b' : '#6ace62') : (isTaiwanStyle ? '#6ace62' : '#f7424b');
+          let html = `<div style="font-weight:700;font-size:13px;margin-bottom:6px;color:#fff;">${d.name}${d.code ? ` <span style="color:#8f8f8f;font-weight:400">${d.code}</span>` : ''}</div>`;
+          html += `<div style="display:flex;justify-content:space-between;gap:18px;"><span style="color:#8f8f8f">漲跌幅</span><span style="color:${c};font-weight:600">${fmtPct(d.changePercent)}</span></div>`;
+          if (d.sector) html += `<div style="display:flex;justify-content:space-between;gap:18px;margin-top:2px;"><span style="color:#8f8f8f">產業</span><span>${d.sector}</span></div>`;
+          if (d.count) html += `<div style="display:flex;justify-content:space-between;gap:18px;margin-top:2px;"><span style="color:#8f8f8f">成分股</span><span>${d.count} 檔</span></div>`;
+          return html;
+        },
+      },
+      series: [
+        {
+          type: 'treemap',
+          left: 0, top: 0, right: 0, bottom: 0,
+          roam: false,
+          nodeClick: false,
+          breadcrumb: { show: false },
+          label: {
+            show: true,
+            formatter: (p: { data: TreeNode }) => {
+              const d = p.data;
+              if (!d || !d.name) return '';
+              return `{name|${d.name}}\n{change|${fmtPct(d.changePercent)}}`;
+            },
+            rich: {
+              name: { fontSize: 13, color: '#fff', fontWeight: 700, textShadowColor: 'rgba(0,0,0,0.6)', textShadowBlur: 3 },
+              change: { fontSize: 12, color: 'rgba(255,255,255,0.92)', padding: [3, 0, 0, 0], textShadowColor: 'rgba(0,0,0,0.6)', textShadowBlur: 3 },
+            },
+          },
+          itemStyle: { borderColor: '#0c0c0e', borderWidth: 2, gapWidth: 2 },
+          emphasis: { itemStyle: { borderColor: '#6ace62', borderWidth: 2 } },
+          data,
+        },
+      ],
+    };
+  }, [nodes, isTaiwanStyle]);
+
+  // 小型分段控制元件
+  const Seg = (props: {
+    value: string; options: { key: string; label: string }[]; onChange: (k: string) => void;
+  }) => (
+    <div className="flex bg-white/5 p-0.5 rounded-lg border border-white/10">
+      {props.options.map((o) => (
+        <button
+          key={o.key}
+          onClick={() => props.onChange(o.key)}
+          className={`text-[11px] font-bold px-3 py-1 rounded-md transition ${
+            props.value === o.key ? 'bg-[#6ace62] text-black shadow' : 'text-slate-300 hover:text-white'
+          }`}
+        >
+          {o.label}
+        </button>
+      ))}
+    </div>
+  );
 
   return (
-    <div className="space-y-6">
-      {/* Upper bar */}
-      <div className="bg-white p-4 rounded-xl border border-slate-100 shadow-3xs flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <div className="space-y-1">
-          <h3 className="font-extrabold text-slate-800 text-xs flex items-center gap-1.5">
-            <Activity className="text-indigo-600 w-4 h-4" />
-            <span>市場熱力圖 (Sector Heatmap)</span>
-          </h3>
-          <p className="text-[10px] text-slate-400">依據市值權重及漲跌幅強度顯示（點擊個股可檢視其報價與資料庫關聯）</p>
+    <div className="rounded-2xl bg-[#0c0c0e] border border-white/10 shadow-lg overflow-hidden text-slate-200">
+      {/* 標題列 */}
+      <div className="px-5 py-4 border-b border-white/5 flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+        <div className="flex items-center gap-2.5">
+          <div className="bg-[#6ace62]/15 text-[#6ace62] p-2 rounded-xl">
+            <Activity className="w-4 h-4" />
+          </div>
+          <div>
+            <h3 className="font-extrabold text-white text-sm">市場熱力圖 · Market Heatmap</h3>
+            <p className="text-[10.5px] text-slate-500">方塊面積＝市值權重，顏色＝{PERIODS.find(p => p.key === period)?.label}漲跌幅</p>
+          </div>
         </div>
 
-        {/* Controls */}
-        <div className="flex gap-2 items-center flex-wrap">
-          {/* Duration toggle */}
-          <div className="flex bg-slate-50 p-1 rounded-lg">
-            {(['day', 'week', 'month'] as const).map((dur) => (
-              <button
-                key={dur}
-                onClick={() => setDuration(dur)}
-                className={`text-[10px] font-bold px-3 py-1 rounded-md transition ${
-                  duration === dur 
-                    ? 'bg-indigo-600 text-white shadow-2xs' 
-                    : 'text-slate-500 hover:text-slate-700'
-                }`}
-              >
-                {dur === 'day' ? '單日' : dur === 'week' ? '單週' : '單月'}
-              </button>
-            ))}
-          </div>
-
-          {/* Color Style Info label */}
-          <span className="text-[9.5px] font-mono text-slate-400 bg-slate-50 border border-slate-100 px-2 py-1 rounded-md">
-            配色：{isTaiwanStyle ? '🔴 漲 / 🟢 跌 (台股風格)' : '🟢 漲 / 🔴 跌 (國際風格)'}
+        <div className="flex flex-wrap items-center gap-2">
+          <Seg value={market} options={[{ key: 'tw', label: '台股' }, { key: 'us', label: '美股' }]} onChange={(k) => setMarket(k as HeatmapMarket)} />
+          <Seg value={dimension} options={DIMENSIONS} onChange={(k) => setDimension(k as Dimension)} />
+          <Seg value={period} options={PERIODS} onChange={(k) => setPeriod(k as HeatmapPeriod)} />
+          <span className="text-[9.5px] font-mono text-slate-400 bg-white/5 border border-white/10 px-2 py-1 rounded-md">
+            {isTaiwanStyle ? '🔴漲 / 🟢跌' : '🟢漲 / 🔴跌'}
           </span>
         </div>
       </div>
 
-      {/* Sector filter */}
-      <div className="flex gap-1 overflow-x-auto pb-1 text-xs">
-        {sectors.map((sec) => (
-          <button
-            key={sec}
-            onClick={() => setSelectedSec(sec)}
-            className={`text-[11px] font-medium px-3 py-1 rounded-full transition shrink-0 ${
-              selectedSec === sec 
-                ? 'bg-indigo-100 text-indigo-800 border border-indigo-200' 
-                : 'bg-white text-slate-500 hover:bg-slate-50 border border-slate-200/60'
-            }`}
-          >
-            {sec}
-          </button>
-        ))}
+      {/* Treemap */}
+      <div className="p-3">
+        {nodes.length > 0 ? (
+          <ReactECharts
+            option={option}
+            style={{ height: 480, width: '100%' }}
+            notMerge
+            opts={{ renderer: 'canvas' }}
+          />
+        ) : (
+          <div className="h-[480px] flex flex-col items-center justify-center gap-3 text-slate-600">
+            <Grid3X3 size={48} strokeWidth={1} />
+            <p className="text-xs">暫無資料</p>
+          </div>
+        )}
       </div>
 
-      {/* Treemap visual cards display */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
-        {filteredStocks.map((st) => {
-          const ret = valueExtractor(st);
-          const colorObj = getHeatColorAndText(ret);
-          const isPos = ret > 0;
-          return (
-            <div
-              key={st.code}
-              onClick={() => alert(`載入 ${st.name} (${st.code}) 專屬深度資料庫面板中...`)}
-              style={{ backgroundColor: colorObj.bg }}
-              className={`p-4 rounded-xl shadow-3xs cursor-pointer border border-white/10 hover:shadow-md hover:scale-102 transition duration-200 flex flex-col justify-between`}
-            >
-              <div className="flex justify-between items-start">
-                <div>
-                  <span className={`text-[11px] font-extrabold ${colorObj.text}`}>
-                    {st.name}
-                  </span>
-                  <span className={`text-[9px] font-mono block opacity-70 ${colorObj.text}`}>
-                    {st.code}
-                  </span>
-                </div>
-                <span className={`text-[9px] font-bold bg-white/25 px-1.5 py-0.5 rounded ${colorObj.text}`}>
-                  {st.sector}
-                </span>
-              </div>
-
-              <div className="mt-4 flex items-baseline justify-between transition group">
-                <span className={`text-base font-extrabold font-mono ${colorObj.text}`}>
-                  {isPos ? '+' : ''}{ret.toFixed(2)}%
-                </span>
-                <ArrowUpRight className={`w-3.5 h-3.5 opacity-60 group-hover:opacity-100 ${colorObj.text}`} />
-              </div>
-            </div>
-          );
-        })}
+      {/* 圖例 */}
+      <div className="px-5 py-3 border-t border-white/5 flex items-center justify-center gap-3">
+        <span className="text-[10px] uppercase tracking-wider text-slate-500">{isTaiwanStyle ? '跌' : '漲'}</span>
+        <div
+          className="w-44 h-1.5 rounded-full"
+          style={{
+            background: isTaiwanStyle
+              ? 'linear-gradient(to right, #6ace62, #3a3a3e, #f7424b)'
+              : 'linear-gradient(to right, #f7424b, #3a3a3e, #6ace62)',
+          }}
+        />
+        <span className="text-[10px] uppercase tracking-wider text-slate-500">{isTaiwanStyle ? '漲' : '跌'}</span>
+        <span className="text-[10px] text-slate-600 ml-3 font-mono">
+          {HEATMAP_MARKETS[market].label} · {nodes.length} {dimension === 'sector' ? '產業' : '檔'}
+        </span>
       </div>
     </div>
   );

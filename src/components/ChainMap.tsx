@@ -20,30 +20,27 @@ export default function ChainMap({ data, onSelectStock, selectedStockId, isTaiwa
     {
       key: 'upstream' as const,
       title: '上游環節 (Upstream)',
-      icon: <Layers className="w-5 h-5 text-sky-600" />,
-      bgHeader: 'bg-sky-50 border-sky-100',
-      textColor: 'text-sky-800',
-      textBtn: 'border-sky-200 hover:bg-sky-50',
+      icon: <Layers className="w-5 h-5 text-sky-300" />,
+      bgHeader: 'bg-sky-500/12 border-white/[0.06]',
+      textColor: 'text-sky-300',
       description: chainMap.upstream,
       stocks: getStageStocks('upstream'),
     },
     {
       key: 'midstream' as const,
       title: '中游環節 (Midstream)',
-      icon: <Milestone className="w-5 h-5 text-indigo-600" />,
-      bgHeader: 'bg-indigo-50 border-indigo-100',
-      textColor: 'text-indigo-800',
-      textBtn: 'border-indigo-200 hover:bg-indigo-50',
+      icon: <Milestone className="w-5 h-5 text-gold" />,
+      bgHeader: 'bg-gold/12 border-white/[0.06]',
+      textColor: 'text-gold',
       description: chainMap.midstream,
       stocks: getStageStocks('midstream'),
     },
     {
       key: 'downstream' as const,
       title: '下游環節 (Downstream)',
-      icon: <ShoppingCart className="w-5 h-5 text-emerald-600" />,
-      bgHeader: 'bg-emerald-50 border-emerald-100',
-      textColor: 'text-emerald-800',
-      textBtn: 'border-emerald-200 hover:bg-emerald-50',
+      icon: <ShoppingCart className="w-5 h-5 text-emerald-300" />,
+      bgHeader: 'bg-up/12 border-white/[0.06]',
+      textColor: 'text-emerald-300',
       description: chainMap.downstream,
       stocks: getStageStocks('downstream'),
     },
@@ -52,11 +49,11 @@ export default function ChainMap({ data, onSelectStock, selectedStockId, isTaiwa
   return (
     <div className="space-y-5" id="chain-map-container">
       <div className="flex items-center justify-between">
-        <h3 className="font-bold text-slate-800 text-sm flex items-center gap-1.5">
-          <Layers className="w-4 h-4 text-indigo-600" />
+        <h3 className="font-satoshi font-medium text-snow text-sm flex items-center gap-1.5">
+          <Layers className="w-4 h-4 text-gold" />
           <span>產業鏈上下游關係圖</span>
         </h3>
-        <span className="text-[10px] text-slate-400 font-mono">觸控個股即可展開深度研究</span>
+        <span className="text-[10px] text-snow-muted font-mono">觸控個股即可展開深度研究</span>
       </div>
 
       {/* Grid of Stages */}
@@ -64,7 +61,7 @@ export default function ChainMap({ data, onSelectStock, selectedStockId, isTaiwa
         {stages.map((stage) => (
           <div
             key={stage.key}
-            className="bg-white border border-slate-100 rounded-xl shadow-xs overflow-hidden flex flex-col justify-between"
+            className="glass-card rounded-xl overflow-hidden flex flex-col justify-between"
           >
             {/* Header */}
             <div>
@@ -72,20 +69,20 @@ export default function ChainMap({ data, onSelectStock, selectedStockId, isTaiwa
                 {stage.icon}
                 <span className={`font-semibold text-xs ${stage.textColor}`}>{stage.title}</span>
               </div>
-              
+
               {/* Description */}
-              <div className="p-3 text-xs text-slate-600 leading-relaxed bg-slate-50/50 min-h-[5rem]">
+              <div className="p-3 text-xs text-snow-2 leading-relaxed bg-white/[0.02] min-h-[5rem]">
                 {stage.description}
               </div>
             </div>
 
             {/* Stage Stocks */}
-            <div className="p-3 bg-white border-t border-slate-50 space-y-2">
-              <span className="text-[10px] uppercase font-bold tracking-wider text-slate-400 block">
+            <div className="p-3 border-t border-white/[0.06] space-y-2">
+              <span className="text-[10px] uppercase font-bold tracking-wider text-snow-muted block">
                 相關概念股 ({stage.stocks.length})
               </span>
               {stage.stocks.length === 0 ? (
-                <p className="text-[11px] text-slate-400 italic py-1">暫無此環節的直接覆蓋個股</p>
+                <p className="text-[11px] text-snow-muted italic py-1">暫無此環節的直接覆蓋個股</p>
               ) : (
                 <div className="space-y-1.5">
                   {stage.stocks.map((stock) => {
@@ -99,18 +96,18 @@ export default function ChainMap({ data, onSelectStock, selectedStockId, isTaiwa
                         onClick={() => onSelectStock(stock)}
                         className={`w-full p-2 text-left rounded-lg border text-xs transition duration-200 flex items-center justify-between ${
                           isSelected
-                            ? 'bg-indigo-50 border-indigo-400 ring-1 ring-indigo-200'
-                            : 'bg-white border-slate-100 hover:bg-slate-50'
+                            ? 'bg-gold/10 border-gold/50 ring-1 ring-gold/25'
+                            : 'bg-white/[0.03] border-white/[0.06] hover:bg-white/[0.06]'
                         }`}
                       >
                         <div className="truncate pr-1">
-                          <p className="font-semibold text-slate-800 truncate flex items-center gap-1">
+                          <p className="font-semibold text-snow truncate flex items-center gap-1">
                             <span>{stock.name}</span>
-                            <span className="text-[10px] text-slate-400 bg-slate-100 px-1 py-0.5 rounded font-mono font-normal">
+                            <span className="text-[10px] text-snow-muted bg-white/[0.06] px-1 py-0.5 rounded font-mono font-normal">
                               {stock.code.replace('.TW', '').replace('.TWO', '')}
                             </span>
                           </p>
-                          <p className="text-[10px] text-slate-500 truncate mt-0.5 leading-none">
+                          <p className="text-[10px] text-snow-muted truncate mt-0.5 leading-none">
                             {stock.role}
                           </p>
                         </div>
@@ -120,8 +117,8 @@ export default function ChainMap({ data, onSelectStock, selectedStockId, isTaiwa
                           <span
                             className={`text-[10px] px-1.5 py-0.5 rounded font-mono font-bold ${
                               isUp
-                                ? isTaiwanStyle ? 'bg-red-50 text-red-600' : 'bg-emerald-50 text-emerald-600'
-                                : isTaiwanStyle ? 'bg-emerald-50 text-emerald-600' : 'bg-red-50 text-red-700'
+                                ? isTaiwanStyle ? 'bg-down/15 text-red-300' : 'bg-up/15 text-emerald-300'
+                                : isTaiwanStyle ? 'bg-up/15 text-emerald-300' : 'bg-down/15 text-red-300'
                             }`}
                           >
                             {isUp ? '+' : ''}

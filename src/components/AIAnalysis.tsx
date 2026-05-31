@@ -88,46 +88,47 @@ export default function AIAnalysis({ isTaiwanStyle }: AIAnalysisProps) {
   };
 
   return (
-    <div className="bg-white p-5 rounded-2xl border border-slate-100 shadow-3xs space-y-4">
+    <div className="glass-card p-5 rounded-2xl space-y-4">
       <div className="space-y-1">
-        <h3 className="font-extrabold text-slate-800 text-xs flex items-center gap-1.5">
-          <Sparkles className="w-4 h-4 text-indigo-600 animate-spin-slow" />
+        <h3 className="font-satoshi font-medium text-snow text-sm flex items-center gap-1.5">
+          <Sparkles className="w-4 h-4 text-gold" />
           <span>AI 深度主題產業分析實驗室</span>
         </h3>
-        <p className="text-[10.5px] text-slate-400">
+        <p className="text-[10.5px] text-snow-muted">
           結合 Google Search 智慧、台灣觀測站數據以及產業鏈關係，實施高確信度推演與資產規劃建議。
         </p>
       </div>
 
       <div className="space-y-3">
         <div className="flex gap-2.5">
-          <input 
+          <input
             type="text"
             value={topicPrompt}
             onChange={(e) => setTopicPrompt(e.target.value)}
             disabled={isSearching}
             placeholder="請輸入欲深度分析的關鍵議題或個股如：矽光子與 CPO 晶粒..."
-            className="flex-1 text-xs px-3.5 py-2.5 border border-slate-200 outline-hidden focus:bg-white focus:ring-2 focus:ring-indigo-100 bg-slate-50 rounded-xl font-medium transition"
+            className="flex-1 text-xs px-3.5 py-2.5 rounded-xl bg-white/[0.05] border border-white/10 text-snow placeholder:text-snow-muted/70 outline-none focus:border-gold/40 focus:bg-white/[0.07] font-medium transition"
           />
           <button
             onClick={handleStartAnalysis}
             disabled={isSearching || !topicPrompt.trim()}
-            className="bg-indigo-600 hover:bg-indigo-700 text-white font-extrabold text-xs px-4 py-2.5 rounded-xl transition flex items-center gap-1 shrink-0 disabled:opacity-50"
+            className="text-[#1a1205] font-bold text-xs px-4 py-2.5 rounded-xl transition flex items-center gap-1 shrink-0 disabled:opacity-50 hover:brightness-110"
+            style={{ background: 'linear-gradient(180deg,#facc15,#f59e0b)' }}
           >
-            <Play className="w-3.5 h-3.5 fill-white" />
+            <Play className="w-3.5 h-3.5 fill-[#1a1205]" />
             <span>開始 AI 研究</span>
           </button>
         </div>
 
         {/* Step-by-step Loading State */}
         {isSearching && (
-          <div className="p-5 bg-slate-50 rounded-xl border border-dashed border-slate-200 space-y-3 animate-fade-in text-xs">
-            <div className="flex justify-between items-center text-slate-500 pb-1.5 border-b border-slate-200/50">
+          <div className="p-5 bg-white/[0.03] rounded-xl border border-dashed border-white/15 space-y-3 animate-fade-in text-xs">
+            <div className="flex justify-between items-center text-snow-2 pb-1.5 border-b border-white/[0.08]">
               <span className="font-bold flex items-center gap-1">
                 <Terminal className="w-4 h-4" />
                 <span>分析引擎執行中...</span>
               </span>
-              <span className="font-mono text-[10px] bg-indigo-50 text-indigo-700 font-bold px-1.5 rounded">{currentStep + 1}/5</span>
+              <span className="font-mono text-[10px] bg-gold/15 text-gold font-bold px-1.5 rounded">{currentStep + 1}/5</span>
             </div>
 
             <div className="space-y-2">
@@ -137,13 +138,13 @@ export default function AIAnalysis({ isTaiwanStyle }: AIAnalysisProps) {
                 return (
                   <div key={idx} className="flex items-center gap-2 text-[11px] transition duration-200">
                     {isCompleted ? (
-                      <CheckCircle className="w-4 h-4 text-emerald-500 shrink-0" />
+                      <CheckCircle className="w-4 h-4 text-emerald-400 shrink-0" />
                     ) : isActive ? (
-                      <Activity className="w-4 h-4 text-indigo-600 animate-spin shrink-0" />
+                      <Activity className="w-4 h-4 text-gold animate-spin shrink-0" />
                     ) : (
-                      <span className="w-4 h-4 rounded-full border border-slate-300 inline-block shrink-0"></span>
+                      <span className="w-4 h-4 rounded-full border border-white/20 inline-block shrink-0"></span>
                     )}
-                    <span className={`${isActive ? 'text-indigo-900 font-bold' : isCompleted ? 'text-slate-400' : 'text-slate-400 font-light'}`}>
+                    <span className={`${isActive ? 'text-snow font-bold' : 'text-snow-muted font-light'}`}>
                       {st}
                     </span>
                   </div>
@@ -155,16 +156,17 @@ export default function AIAnalysis({ isTaiwanStyle }: AIAnalysisProps) {
 
         {/* Report Result */}
         {report && (
-          <div className="bg-slate-50 p-5 rounded-xl border border-slate-100 animate-fade-in overflow-x-auto">
-            <div className="prose prose-slate max-w-none text-xs text-slate-600 leading-relaxed max-h-[35rem] overflow-y-auto">
+          <div className="bg-white/[0.03] p-5 rounded-xl border border-white/[0.06] animate-fade-in overflow-x-auto">
+            <div className="prose prose-invert max-w-none text-xs text-snow-2 leading-relaxed max-h-[35rem] overflow-y-auto prose-headings:text-snow prose-strong:text-snow prose-a:text-gold prose-th:text-snow-2">
               <Markdown>{report}</Markdown>
             </div>
-            
-            <div className="mt-4 pt-4 border-t border-slate-200/50 flex justify-between items-center text-[10px] text-slate-400">
+
+            <div className="mt-4 pt-4 border-t border-white/[0.08] flex justify-between items-center text-[10px] text-snow-muted">
               <span>報告印記代碼：#AI-STUDIO-LAB-2026</span>
-              <button 
+              <button
                 onClick={() => alert('研究報告已導出為優化 PDF 格式並存入您的 Watchlist 關聯硬碟中。')}
-                className="bg-indigo-600 text-white hover:bg-indigo-700 font-bold px-3 py-1.5 rounded-lg transition"
+                className="text-[#1a1205] font-bold px-3 py-1.5 rounded-lg transition hover:brightness-110"
+                style={{ background: 'linear-gradient(180deg,#facc15,#f59e0b)' }}
               >
                 📥 導出 PDF 報告
               </button>

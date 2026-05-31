@@ -11,8 +11,8 @@
 //   - LLM 必須在每個百分比後面附上引用編號 [1] [2]，回傳結構附對照表
 // ============================================================================
 
-import { GoogleGenAI } from '@google/genai';
 import { fetchCredibleNews, NewsItem } from './newsFetcher';
+import { geminiJson } from './geminiClient';
 
 export interface ProductMix {
   product: string;
@@ -46,7 +46,6 @@ export interface IndustrySurvey {
 }
 
 export async function runIndustrySurvey(
-  ai: GoogleGenAI,
   topic: string
 ): Promise<IndustrySurvey> {
   // 1. 先抓可信新聞（共 ~12 則）
@@ -106,21 +105,7 @@ ${citationBlock || '（暫無外部新聞，請依公開資訊推估，並把 co
 3. 每條 productMix 必須有 citationIds（即使是 []，也要解釋 confidence 為 medium / low）。
 4. 直接回傳 JSON 物件，不要 markdown 包裝、不要任何說明文字。`;
 
-  const response = await ai.models.generateContent({
-    model: 'gemini-3.5-flash',
-    contents: prompt,
-    config: {
-      tools: [{ googleSearch: {} }],
-      responseMimeType: 'application/json',
-    },
-  });
-
-  let text = (response.text || '').trim();
-  if (text.startsWith('```json')) text = text.slice(7);
-  if (text.startsWith('```')) text = text.slice(3);
-  if (text.endsWith('```')) text = text.slice(0, -3);
-
-  const parsed = JSON.parse(text.trim());
+  const parsed = await geminiJson<any>(prompt, { search: true });
 
   return {
     ...parsed,
@@ -131,7 +116,6 @@ ${citationBlock || '（暫無外部新聞，請依公開資訊推估，並把 co
 
 // ---------- 單公司產品佔比（更輕量） ----------
 export async function runCompanyRevenueBreakdown(
-  ai: GoogleGenAI,
   ticker: string,
   companyName: string
 ): Promise<CompanyBreakdown & { citations: IndustrySurvey['citations'] }> {
@@ -168,20 +152,6 @@ ${citationBlock || '（暫無外部新聞，請依年報、法說會公開資訊
 
 要求：productMix 加總 = 100，3-5 條；可能的話請貼上實際財報 / 法說會數字。直接回傳 JSON。`;
 
-  const response = await ai.models.generateContent({
-    model: 'gemini-3.5-flash',
-    contents: prompt,
-    config: {
-      tools: [{ googleSearch: {} }],
-      responseMimeType: 'application/json',
-    },
-  });
-
-  let text = (response.text || '').trim();
-  if (text.startsWith('```json')) text = text.slice(7);
-  if (text.startsWith('```')) text = text.slice(3);
-  if (text.endsWith('```')) text = text.slice(0, -3);
-
-  const parsed = JSON.parse(text.trim());
+  const parsed = await geminiJson<any>(prompt, { search: true });
   return { ...parsed, citations };
 }

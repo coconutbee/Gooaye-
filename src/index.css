@@ -1,1 +1,203 @@
+@import url('https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600&display=swap');
 @import "tailwindcss";
+
+/* ============================================================================
+   SnowCap Insights 滾雪球洞察科技 — 設計系統 token
+   依 brand_assets/frontend_concept/style_decision.md：純黑 + 毛玻璃 + 琥珀金點綴
+   用法：bg-snow-bg / bg-glass-card / border-glass / text-snow / text-gold …
+============================================================================ */
+@theme {
+  /* 背景 */
+  --color-snow-bg: #000000;       /* 主背景 */
+  --color-snow-deep: #050505;     /* 次背景 / section */
+  --color-snow-glass: #0a0a0a;    /* glass card 底 */
+  --color-snow-elev: #111111;     /* hover / modal 浮層 */
+
+  /* 文字 */
+  --color-snow: #f5f5f5;          /* 主文字 */
+  --color-snow-2: #c8c8c8;        /* 次要文字（調亮） */
+  --color-snow-muted: #9aa0a6;    /* caption / 輔助（調亮，原 #777 偏暗） */
+
+  /* 數據語意色 */
+  --color-up: #22c55e;            /* 上漲 / 正向 */
+  --color-down: #ef4444;          /* 下跌 / 警示 */
+  --color-gold: #f59e0b;          /* active / 重點 amber */
+  --color-gold-soft: #facc15;     /* CTA / premium highlight */
+
+  /* 邊框 */
+  --color-glass: #2a2a2a;         /* card / tab 邊框 */
+  --color-glass-hi: #3a3a3a;      /* 反光邊 / focus */
+
+  --font-satoshi: "Satoshi", "Inter", system-ui, sans-serif;
+  --font-inter: "Inter", system-ui, sans-serif;
+  --font-geistmono: "Geist Mono", ui-monospace, "SFMono-Regular", monospace;
+
+  /* 保留：MarketHeatmap (Tradytics) 既有 token */
+  --color-tdbg: #060606;
+  --color-tdcard: #151515;
+  --color-tdcard2: #131314;
+  --color-tdborder: #1a1a1a;
+  --color-tdtext: #fbfbfb;
+  --color-tdmuted: #8f8f8f;
+  --color-tdhead: #b4b4b4;
+  --color-tdup: #22c55e;
+  --color-tddown: #ef4444;
+  --color-tdaccent: #f59e0b;
+  --color-tdbtn: #1a1a1a;
+  --font-geist: "Inter", ui-sans-serif, system-ui, sans-serif;
+}
+
+/* ----------------------------------------------------------------------------
+   基底
+---------------------------------------------------------------------------- */
+html, body, #root {
+  height: 100%;
+}
+body {
+  background-color: #000000;
+  color: #f5f5f5;
+  font-family: var(--font-inter);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* 純黑底上的環境光暈：讓玻璃卡片浮起來 */
+.snow-ambient {
+  background:
+    radial-gradient(900px 520px at 78% -8%, rgba(245, 158, 11, 0.10), transparent 60%),
+    radial-gradient(760px 480px at 0% 0%, rgba(56, 130, 246, 0.06), transparent 55%),
+    #000000;
+}
+
+/* ----------------------------------------------------------------------------
+   毛玻璃元件
+---------------------------------------------------------------------------- */
+/* Liquid Glass：位移折射只作用於卡片「背後」的畫面，卡內文字維持清晰。
+   Chromium 支援 backdrop-filter: url()；Safari/Firefox 會優雅退化成純 blur。 */
+.glass-card {
+  position: relative;
+  isolation: isolate;
+  background: rgba(10, 10, 10, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  backdrop-filter: blur(7px) saturate(125%) url(#liquid-glass);
+  -webkit-backdrop-filter: blur(10px) saturate(125%);
+  box-shadow:
+    0 1px 0 0 rgba(255, 255, 255, 0.07) inset,
+    0 0 0 0.5px rgba(255, 255, 255, 0.04) inset,
+    0 24px 60px -30px rgba(0, 0, 0, 0.9);
+}
+/* 高光рим：左上亮邊 + 內緣反光，賣出「玻璃厚度」 */
+.glass-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0) 40%, rgba(255, 255, 255, 0) 60%, rgba(255, 255, 255, 0.08));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  z-index: 1;
+}
+.glass-block {
+  background: rgba(17, 17, 17, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(9px) saturate(125%) url(#liquid-glass);
+  -webkit-backdrop-filter: blur(14px) saturate(125%);
+}
+
+/* sidebar / topbar 玻璃 */
+.glass-bar {
+  background: rgba(5, 5, 5, 0.66);
+  backdrop-filter: blur(22px) saturate(130%);
+  -webkit-backdrop-filter: blur(22px) saturate(130%);
+}
+
+/* ----------------------------------------------------------------------------
+   側欄導覽 item
+---------------------------------------------------------------------------- */
+.nav-item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  width: 100%;
+  padding: 0.6rem 0.8rem;
+  border-radius: 0.8rem;
+  font-family: var(--font-inter);
+  font-size: 0.84rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  color: #b8b8b8;
+  border: 1px solid transparent;
+  transition: color .18s ease, background .18s ease, border-color .18s ease;
+}
+.nav-item:hover {
+  color: #f5f5f5;
+  background: rgba(255, 255, 255, 0.06);
+}
+.nav-item[data-active="true"] {
+  color: #fde9c4;
+  background: rgba(245, 158, 11, 0.14);
+  border-color: rgba(245, 158, 11, 0.30);
+}
+.nav-item[data-active="true"]::before {
+  content: '';
+  position: absolute;
+  left: -0.55rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3px;
+  height: 1.1rem;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #facc15, #f59e0b);
+  box-shadow: 0 0 12px rgba(245, 158, 11, 0.7);
+}
+
+/* glass 分段控制 */
+.seg {
+  display: inline-flex;
+  gap: 2px;
+  padding: 3px;
+  border-radius: 0.7rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+.seg-btn {
+  padding: 0.3rem 0.75rem;
+  border-radius: 0.5rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #b8b8b8;
+  transition: all .16s ease;
+}
+.seg-btn[data-active="true"] {
+  color: #1a1205;
+  background: linear-gradient(180deg, #facc15, #f59e0b);
+}
+.seg-btn:not([data-active="true"]):hover { color: #f5f5f5; }
+
+/* logo：黑色線稿 → 反白 */
+.logo-invert { filter: invert(1) brightness(1.06); }
+
+/* 自訂卷軸 */
+*::-webkit-scrollbar { width: 8px; height: 8px; }
+*::-webkit-scrollbar-track { background: transparent; }
+*::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.10); border-radius: 999px; }
+*::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.18); }
+.scrollbar-none::-webkit-scrollbar { display: none; }
+.scrollbar-none { scrollbar-width: none; }
+
+/* 動畫 */
+@keyframes snow-fade-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-in { animation: snow-fade-in .35s ease both; }
+
+@keyframes snow-drawer-in {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(0); }
+}
